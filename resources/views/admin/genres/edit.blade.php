@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('template_title')
-    {{ __('Sửa thông tin ' . $author->name) }}
+    {{ __('Sửa thông tin ' . $genre->name) }}
 @endsection
 @php
     $method = 'PATCH';
@@ -16,15 +16,15 @@
                             <span class="card-title">{{ __('Sửa thông tin') }}</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('admin.authors.index') }}"> {{ __('Trở lại') }}</a>
+                            <a class="btn btn-primary" href="{{ route('admin.genres.index') }}"> {{ __('Trở lại') }}</a>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.authors.update', $author->id) }}" role="form"
+                        <form method="POST" action="{{ route('admin.genres.update', $genre->id) }}" role="form"
                               enctype="multipart/form-data">
                             {{ method_field($method) }}
                             @csrf
-                            @include('admin.authors.form')
+                            @include('admin.genres.form')
                         </form>
                     </div>
                 </div>

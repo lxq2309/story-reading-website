@@ -41,7 +41,7 @@ class AuthorController extends Controller
     {
         $request->validated();
         $author = Author::create($request->all());
-        return redirect()->route('admin.authors.index')->with('success', 'Tao tac gia thanh cong!');
+        return redirect()->route('admin.authors.index')->with('success', 'Tạo tác giả thành công!');
     }
 
     /**
@@ -67,7 +67,7 @@ class AuthorController extends Controller
     {
         $request->validated();
         $author->update($request->all());
-        return redirect()->route('admin.authors.index')->with('success', 'Cap nhat thanh cong!');
+        return redirect()->route('admin.authors.index')->with('success', 'Cập nhật thông tin tác giả thành công!');
     }
 
     /**

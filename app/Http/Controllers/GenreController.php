@@ -5,15 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Genre\StoreGenreRequest;
 use App\Http\Requests\Genre\UpdateGenreRequest;
 use App\Models\Genre;
+use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $genres = Genre::query()->orderByDesc("id");
+        if ($request->has('search')) {
+            $searchText = $request->input('search');
+            $genres->where('name', 'like', '%' . $searchText . '%');
+        }
+
+        $genres = $genres->paginate();
+        return view('admin.genres.index', ['genres' => $genres]);
     }
 
     /**
@@ -21,7 +29,8 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        $genre  = new Genre();
+        return view('admin.genres.create', ['genre' => $genre]);
     }
 
     /**
@@ -29,7 +38,9 @@ class GenreController extends Controller
      */
     public function store(StoreGenreRequest $request)
     {
-        //
+        $request->validated();
+        Genre::create($request->all());
+        return redirect()->route('admin.genres.index')->with('success', 'Tạo mới thể loại thành công!');
     }
 
     /**
@@ -45,7 +56,7 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        return view('admin.genres.edit', ['genre' => $genre]);
     }
 
     /**
@@ -53,7 +64,9 @@ class GenreController extends Controller
      */
     public function update(UpdateGenreRequest $request, Genre $genre)
     {
-        //
+        $request->validated();
+        $genre->update($request->all());
+        return redirect()->route('admin.genres.index')->with('success', 'Cập nhật thông tin thể loại thành công!');
     }
 
     /**
@@ -61,6 +74,7 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+        $genre->delete();
+        return redirect()->route('admin.genres.index')->with('success', 'Xoá thể loại thành công!');
     }
 }
