@@ -25,6 +25,7 @@
                         <form method="POST" action="{{ route('admin.genres.store') }}" role="form"
                               enctype="multipart/form-data">
                             @csrf
+                            @method($method)
                             @include('admin.genres.form')
                         </form>
                     </div>

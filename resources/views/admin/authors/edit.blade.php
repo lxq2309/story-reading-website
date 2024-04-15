@@ -24,6 +24,7 @@
                               enctype="multipart/form-data">
                             {{ method_field($method) }}
                             @csrf
+                            @method($method)
                             @include('admin.authors.form')
                         </form>
                     </div>

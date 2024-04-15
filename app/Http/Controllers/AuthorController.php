@@ -18,7 +18,7 @@ class AuthorController extends Controller
         $authors = Author::query()->orderByDesc("id");
         if ($request->has('search')) {
             $searchText = $request->input('search');
-            $authors->where('name', 'like', "%$searchText%");
+            $authors->where('name', 'like', '%'.$searchText.'%');
         }
 
         $authors = $authors->paginate();
@@ -41,7 +41,8 @@ class AuthorController extends Controller
     {
         $request->validated();
         $author = Author::create($request->all());
-        return redirect()->route('admin.authors.index')->with('success', 'Tạo tác giả thành công!');
+        return redirect()->route('admin.authors.index')
+            ->with('success', 'Tạo tác giả thành công!');
     }
 
     /**
@@ -67,7 +68,8 @@ class AuthorController extends Controller
     {
         $request->validated();
         $author->update($request->all());
-        return redirect()->route('admin.authors.index')->with('success', 'Cập nhật thông tin tác giả thành công!');
+        return redirect()->route('admin.authors.index')
+            ->with('success', 'Cập nhật thông tin tác giả thành công!');
     }
 
     /**
@@ -76,6 +78,7 @@ class AuthorController extends Controller
     public function destroy(Author $author)
     {
         $author->delete();
-        return redirect()->route('admin.authors.index')->with('success', 'Xoá tác giả thành công!');
+        return redirect()->route('admin.authors.index')
+            ->with('success', 'Xoá tác giả thành công!');
     }
 }

@@ -10,7 +10,7 @@ class MenuBaseRequest extends BaseRequest
     public function attributes()
     {
         return [
-
+            'name' => 'Tên link',
         ];
     }
 }

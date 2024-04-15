@@ -10,7 +10,7 @@ class GenreBaseRequest extends BaseRequest
     public function attributes()
     {
         return [
-
+            'name' => 'Tên thể loại',
         ];
     }
 }

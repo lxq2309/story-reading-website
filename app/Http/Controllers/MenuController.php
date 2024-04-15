@@ -5,15 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Menu\StoreMenuRequest;
 use App\Http\Requests\Menu\UpdateMenuRequest;
 use App\Models\Menu;
+use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $menus = Menu::query()->orderByDesc("id");
+        if ($request->has('search')) {
+            $searchText = $request->input('search');
+            $menus->where('name', 'like', '%'.$searchText.'%');
+        }
+
+        $menus = $menus->paginate();
+        return view('admin.menus.index', ['menus' => $menus]);
     }
 
     /**
@@ -21,7 +29,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        $menu = new Menu();
+        return view('admin.menus.create', ['menu' => $menu]);
     }
 
     /**
@@ -29,7 +38,9 @@ class MenuController extends Controller
      */
     public function store(StoreMenuRequest $request)
     {
-        //
+        $request->validated();
+        Menu::create($request->all());
+        return redirect()->route('admin.menus.index')->with('success', 'Tạo link mới thành công!');
     }
 
     /**
@@ -45,7 +56,7 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        return view('admin.menus.edit', ['menu' => $menu]);
     }
 
     /**
@@ -53,7 +64,9 @@ class MenuController extends Controller
      */
     public function update(UpdateMenuRequest $request, Menu $menu)
     {
-        //
+        $request->validated();
+        $menu->update($request->all());
+        return redirect()->route('admin.menus.index')->with('success', 'Sửa link thành công!');
     }
 
     /**
