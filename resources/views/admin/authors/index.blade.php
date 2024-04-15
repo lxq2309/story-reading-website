@@ -52,13 +52,14 @@
                                             <td>
                                                 <form
                                                     action="{{ route('admin.authors.destroy', $author->id) }}"
-                                                    method="POST">
+                                                    method="POST" class="formDelete">
                                                     <a class="btn btn-sm btn-success"
                                                        href="{{ route('admin.authors.edit', $author->id) }}"><i
                                                             class="fa fa-fw fa-edit"></i> {{ __('Sửa') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    <button type="submit" class="btn btn-danger btn-sm btnDelete">
+                                                        <i
                                                             class="fa fa-fw fa-trash"></i> {{ __('Xoá') }}
                                                     </button>
                                                 </form>

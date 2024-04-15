@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreChapterRequest;
-use App\Http\Requests\UpdateChapterRequest;
+use App\Http\Requests\Chapter\StoreChapterRequest;
+use App\Http\Requests\Chapter\UpdateChapterRequest;
 use App\Models\Chapter;
 
 class ChapterController extends Controller

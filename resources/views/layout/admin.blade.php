@@ -148,7 +148,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}" class="nav-link {{ set_active('admin.users.*') }}">
+                                <a href="{{ route('admin.users.index') }}"
+                                   class="nav-link {{ set_active('admin.users.*') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>
                                         Admin
@@ -158,7 +159,8 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.articles.index') }}" class="nav-link {{ set_active('admin.articles.*') }}">
+                        <a href="{{ route('admin.articles.index') }}"
+                           class="nav-link {{ set_active('admin.articles.*') }}">
                             <i class="fa-solid fa-newspaper"></i>
                             <p>
                                 Truyện
@@ -166,7 +168,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.authors.index') }}" class="nav-link {{ set_active('admin.authors.*') }}">
+                        <a href="{{ route('admin.authors.index') }}"
+                           class="nav-link {{ set_active('admin.authors.*') }}">
                             <i class="fa-solid fa-industry"></i>
                             <p>
                                 Tác giả
@@ -317,6 +320,20 @@
         }
     }
 </script>
+<script>
+    $(document).ready(function () {
+        $('.formDelete').each(function (i, el) {
+
+            $(el).find('.btnDelete').on('click', function (event) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc chắn muốn xoá không?")) {
+                    $(el).submit();
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 
 </html>
