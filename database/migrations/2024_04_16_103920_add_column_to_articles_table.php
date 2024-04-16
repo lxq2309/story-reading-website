@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('role')->default(0)->after('remember_token');
+        Schema::table('articles', function (Blueprint $table) {
+            $table->integer('status')->default(0)->after('view');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+        Schema::table('articles', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };
