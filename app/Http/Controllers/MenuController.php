@@ -74,6 +74,7 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
+        return redirect()->route('admin.menus.index')->with('success', 'Xoá link thành công!');
     }
 }

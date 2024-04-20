@@ -30,6 +30,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('authors', AuthorController::class);
     Route::resource('genres', GenreController::class);
     Route::resource('menus', MenuController::class);
+    Route::get('/users/admin', [UserController::class, 'showAdmins'])->name('users.admin');
+    Route::get('/users/poster', [UserController::class, 'showPosters'])->name('users.poster');
+    Route::get('/users/banned', [UserController::class, 'showBanneds'])->name('users.banned');
+    Route::get('/users/{user}/create-ban', [UserController::class, 'createBan'])->name('users.create_ban');
+    Route::post('/users/{user}/create-ban', [UserController::class, 'storeBan'])->name('users.store_ban');
+    Route::get('/users/{user}/edit-ban', [UserController::class, 'editBan'])->name('users.edit_ban');
+    Route::patch('/users/{user}/edit-ban', [UserController::class, 'updateBan'])->name('users.update_ban');
+    Route::delete('/users/{user}/unban', [UserController::class, 'unban'])->name('users.unban');
+    Route::get('/users/{user}/edit-role', [UserController::class, 'editRole'])->name('users.edit_role');
+    Route::patch('/users/{user}/update-role', [UserController::class, 'updateRole'])->name('users.update_role');
     Route::resource('users', UserController::class);
     Route::resource('articles', ArticleController::class);
     Route::resource('chapters', ChapterController::class);

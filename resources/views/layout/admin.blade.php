@@ -122,7 +122,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="/" class="nav-link {{ set_active('admin.dashboard') }}">
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ set_active('admin.dashboard') }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Trang tổng quan
@@ -130,7 +130,7 @@
                         </a>
                     </li>
                     <li class="nav-item menu-is-opening menu-open">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link {{ set_active('admin.users.*') }}">
                             <i class="fa-solid fa-user"></i>
                             <p>
                                 Quản lý tài khoản
@@ -140,19 +140,37 @@
                         <ul class="nav nav-treeview" style="display: block;">
                             <li class="nav-item">
                                 <a href="{{ route('admin.users.index') }}"
-                                   class="nav-link {{ set_active('admin.users.*') }}">
+                                   class="nav-link {{ set_active('admin.users.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>
-                                        Nguoi dung
+                                        Tất cả tài khoản
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}"
-                                   class="nav-link {{ set_active('admin.users.*') }}">
+                                <a href="{{ route('admin.users.banned') }}"
+                                   class="nav-link {{ set_active('admin.users.banned') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>
-                                        Admin
+                                        Tài khoản bị cấm
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.poster') }}"
+                                   class="nav-link {{ set_active('admin.users.poster') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Tài khoản người đăng bài
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.admin') }}"
+                                   class="nav-link {{ set_active('admin.users.admin') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Tài khoản quản trị viên
                                     </p>
                                 </a>
                             </li>
@@ -327,6 +345,15 @@
             $(el).find('.btnDelete').on('click', function (event) {
                 event.preventDefault();
                 if (confirm("Bạn có chắc chắn muốn xoá không?")) {
+                    $(el).submit();
+                }
+            });
+        });
+        $('.formUnban').each(function (i, el) {
+
+            $(el).find('.btnUnban').on('click', function (event) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc chắn muốn gỡ lệnh cấm cho người dùng này không?")) {
                     $(el).submit();
                 }
             });

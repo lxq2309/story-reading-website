@@ -8,4 +8,9 @@ if (!function_exists('set_active')) {
     {
         return Route::is($route) ? 'active' : '';
     }
+
+    function is_route($route): string
+    {
+        return Route::is($route);
+    }
 }

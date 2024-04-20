@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('banned_users', function (Blueprint $table) {
-            // ID của user bị ban
-            $table->bigInteger('user_id')->unsigned();
+            // ID của user bị ban, đồng thời là khoá chính để đảm bảo mỗi user chỉ bị ban 1 lần
+            $table->id('user_id');
             // ID của admin đã ban user đó
             $table->bigInteger('admin_id')->unsigned();
             // Lý do bị ban
@@ -23,8 +23,6 @@ return new class extends Migration
             // Thời gian tạo và thời gian cập nhật
             $table->timestamps();
 
-            // Primary key sử dụng tổ hợp của user_id và admin_id
-            $table->primary(['user_id', 'admin_id']);
             // Liên kết khoá ngoại
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
