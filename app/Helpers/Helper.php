@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Enums\ArticleStatus;
 use Illuminate\Support\Facades\Route;
 
 if (!function_exists('set_active')) {
@@ -12,5 +13,18 @@ if (!function_exists('set_active')) {
     function is_route($route): string
     {
         return Route::is($route);
+    }
+
+    function validateArticleStatus($status): bool
+    {
+        if (is_numeric($status))
+        {
+            $status = (int)$status;
+        }
+        else
+        {
+            return false;
+        }
+        return ArticleStatus::tryFrom($status) != null;
     }
 }

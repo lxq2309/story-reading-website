@@ -10,7 +10,7 @@ class ArticleBaseRequest extends BaseRequest
     public function attributes()
     {
         return [
-
+            'title' => 'Tên truyện',
         ];
     }
 }

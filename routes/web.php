@@ -41,6 +41,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/users/{user}/edit-role', [UserController::class, 'editRole'])->name('users.edit_role');
     Route::patch('/users/{user}/update-role', [UserController::class, 'updateRole'])->name('users.update_role');
     Route::resource('users', UserController::class);
+    Route::get('/articles/{article}/show-chapters', [ChapterController::class, 'index'])->name('articles.show_chapters');
+    Route::get('/articles/{article}/create-chapter', [ChapterController::class, 'create'])->name('articles.create_chapter');
+    Route::post('/articles/{article}/store-chapter', [ChapterController::class, 'store'])->name('articles.store_chapter');
+    Route::get('/articles/{article}/edit-chapter/{chapter}', [ChapterController::class, 'edit'])->name('articles.edit_chapter');
+    Route::patch('/articles/{article}/update-chapter/{chapter}', [ChapterController::class, 'update'])->name('articles.update_chapter');
+    Route::delete('/articles/{article}/destroy-chapter/{chapter}', [ChapterController::class, 'destroy'])->name('articles.destroy_chapter');
+    Route::patch('/articles/{article}/change-status/{status}', [ArticleController::class, 'updateStatus'])->name('articles.change_status');
+    Route::patch('/articles/{article}/change-complete-status', [ArticleController::class, 'updateCompleteStatus'])->name('articles.change_complete_status');
     Route::resource('articles', ArticleController::class);
-    Route::resource('chapters', ChapterController::class);
 });

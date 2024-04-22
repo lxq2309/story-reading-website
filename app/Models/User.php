@@ -49,4 +49,9 @@ class User extends Model
     {
         return $this->hasOne(BannedUser::class, 'user_id', 'id');
     }
+
+    public function articles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Article::class, 'user_id', 'id');
+    }
 }

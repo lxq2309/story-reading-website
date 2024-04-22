@@ -358,6 +358,45 @@
                 }
             });
         });
+        $('.formSetCompleted').each(function (i, el) {
+
+            $(el).find('.btnSetCompleted').on('click', function (event) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc chắn muốn đặt bài viết thành đã hoàn thành?")) {
+                    $(el).submit();
+                }
+            });
+            $(el).find('.btnSetNotCompleted').on('click', function (event) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc chắn muốn đặt bài viết thành chưa hoàn thành?")) {
+                    $(el).submit();
+                }
+            });
+        });
+        $('.formApprove').each(function (i, el) {
+
+            $(el).find('.btnApprove').on('click', function (event) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc chắn duyệt bài này không?")) {
+                    $(el).submit();
+                }
+            });
+            $(el).find('.btnVisible').on('click', function (event) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc chắn hiển thị bài này không?")) {
+                    $(el).submit();
+                }
+            });
+        });
+        $('.formHidden').each(function (i, el) {
+
+            $(el).find('.btnHidden').on('click', function (event) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc chắn muốn ẩn bài viết này không?")) {
+                    $(el).submit();
+                }
+            });
+        });
     });
 </script>
 
