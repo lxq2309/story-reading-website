@@ -10,7 +10,7 @@ class UserBaseRequest extends BaseRequest
     public function attributes()
     {
         return [
-
+            'reason' => 'Lý do ban',
         ];
     }
 }

@@ -9,7 +9,7 @@ class StoreBanUserRequest extends UserBaseRequest
     public function rules(): array
     {
         return [
-            //
+            'reason' => 'required',
         ];
     }
 }
