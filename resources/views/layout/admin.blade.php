@@ -188,7 +188,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.authors.index') }}"
                            class="nav-link {{ set_active('admin.authors.*') }}">
-                            <i class="fa-solid fa-industry"></i>
+                            <i class="fa-solid fa-pen"></i>
                             <p>
                                 Tác giả
                             </p>
@@ -204,7 +204,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.menus.index') }}" class="nav-link {{ set_active('admin.menus.*') }}">
-                            <i class="fa-solid fa-bars"></i>
+                            <i class="fa-solid fa-folder"></i>
                             <p>
                                 Menu
                             </p>
