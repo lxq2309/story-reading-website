@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\ChapterController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GenreController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\ChapterController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
