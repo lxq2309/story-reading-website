@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Chapter\StoreChapterRequest;
 use App\Http\Requests\Admin\Chapter\UpdateChapterRequest;
 use App\Models\Article;

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -51,3 +48,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('/articles/{article}/change-complete-status', [ArticleController::class, 'updateCompleteStatus'])->name('articles.change_complete_status');
     Route::resource('articles', ArticleController::class);
 });
+
+Route::get('/', [HomeController::class, 'index'])->name('home.index');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Author\StoreAuthorRequest;
 use App\Http\Requests\Admin\Author\UpdateAuthorRequest;
 use App\Models\Author;

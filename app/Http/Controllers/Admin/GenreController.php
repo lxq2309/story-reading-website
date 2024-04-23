@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Genre\StoreGenreRequest;
 use App\Http\Requests\Admin\Genre\UpdateGenreRequest;
 use App\Models\Genre;

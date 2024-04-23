@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Menu\StoreMenuRequest;
 use App\Http\Requests\Admin\Menu\UpdateMenuRequest;
 use App\Models\Menu;

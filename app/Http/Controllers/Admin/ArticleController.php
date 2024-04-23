@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\ArticleStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Article\StoreArticleRequest;
 use App\Http\Requests\Admin\Article\UpdateArticleRequest;
 use App\Http\Requests\Article\ChangeStatusRequest;
