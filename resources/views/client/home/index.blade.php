@@ -75,14 +75,14 @@
                         @endforeach
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-2 col-chap text-info">
-                        @if ($article->chapters->count() == 0)
+                        @if ($article->chapters->isEmpty())
                             <span class="chapter-text">
                             Chưa có chương nào
                         </span>
                         @else
-                            <a title="@newestChapter.Title" href="#">
+                            <a title="{{ $article->newest_chapter->title }}" href="#">
                             <span class="chapter-text">
-                                {{ $article->chapters()->max()->title }}
+                                {{ $article->newest_chapter->title }}
                             </span>
                             </a>
                         @endif

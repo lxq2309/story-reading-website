@@ -40,12 +40,9 @@
                                 @if ($article->chapters->isEmpty())
                                     <span class="chapter-text">Chưa có chương nào</span>
                                 @else
-                                    @php
-                                        $newestChapter = $article->chapters->max('number');
-                                    @endphp
-                                    <a title="{{ $newestChapter->title }}"
-                                       href="/p/{{ $article->id }}/{{ $newestChapter->number }}">
-                                        <span class="chapter-text">{{ $newestChapter->title }}</span>
+                                    <a title="{{ $article->newest_chapter->title }}"
+                                       href="/p/{{ $article->id }}/{{ $article->newest_chapter->number }}">
+                                        <span class="chapter-text">{{ $article->newest_chapter->title }}</span>
                                     </a>
                                 @endif
                             </div>

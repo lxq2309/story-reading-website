@@ -37,6 +37,13 @@ class Article extends Model
         return $value . ' chương';
     }
 
+    protected function getNewestChapterAttribute() : Chapter
+    {
+        $newestChapterNumber = $this->chapters->max('number');
+        $newestChapter = $this->chapters->where('number', $newestChapterNumber)->first();
+        return $newestChapter;
+    }
+
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
