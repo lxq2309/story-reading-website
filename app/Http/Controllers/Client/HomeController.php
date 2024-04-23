@@ -50,4 +50,15 @@ class HomeController extends Controller
             'description' => 'Danh sách những truyện đã hoàn thành, ra đủ chương.',
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $articles = Article::query()->where('title', 'like', '%' . $keyword . '%')->paginate();
+        return view('client.articles.index', [
+            'articles' => $articles,
+            'title' => 'Tìm kiếm cho từ khoá "' . $keyword . '"',
+            'description' => 'Danh sách truyện có liên quan tới từ khoá "' . $keyword . '"',
+        ]);
+    }
 }

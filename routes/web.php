@@ -50,6 +50,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/search', [HomeController::class, 'search'])->name('home.search');
 Route::get('/doc-nhieu-nhat', [HomeController::class, 'showHotArticles'])->name('home.show_hot_articles');
 Route::get('/moi-cap-nhat', [HomeController::class, 'showNewUpdateArticles'])->name('home.show_new_update_articles');
 Route::get('/da-hoan-thanh', [HomeController::class, 'showCompletedArticles'])->name('home.show_completed_articles');
+Route::get('/genres/{genre}', [App\Http\Controllers\Client\GenreController::class, 'show'])->name('genres.show');

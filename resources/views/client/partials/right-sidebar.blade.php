@@ -10,6 +10,7 @@
     @case(is_route('home.show_hot_articles'))
     @case(is_route('home.show_new_update_articles'))
     @case(is_route('home.show_completed_articles'))
+    @case(is_route('home.search'))
         @include('client.partials.list-article-sidebar')
         @break
     @default

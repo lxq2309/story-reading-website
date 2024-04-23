@@ -25,7 +25,7 @@
                         <div class="col-md-4">
                             <ul class="dropdown-menu">
                                 @foreach ($chunk as $genre)
-                                    <li><a href="#" title="{{ $genre['name'] }}">{{ $genre['name'] }}</a></li>
+                                    <li><a href="{{ route('genres.show', $genre['id']) }}" title="{{ $genre['name'] }}">{{ $genre['name'] }}</a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -83,7 +83,7 @@
         </li>
     </ul>
 
-    <form class="navbar-form navbar-right" role="search">
+    <form class="navbar-form navbar-right" role="search" action="{{ route('home.search') }}">
         <div class="input-group search-holder">
             <input aria-label="Keyword search" class="form-control" type="search" name="keyword"
                    placeholder="Tìm kiếm theo tên truyện" value="" itemprop="query-input" required/>

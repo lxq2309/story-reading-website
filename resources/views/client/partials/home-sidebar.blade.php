@@ -4,7 +4,7 @@
     </div>
     <div class="row">
         @foreach ($genres as $genre)
-            <div class="col-xs-6"><a href="#" title="{{ $genre->name }}">{{ $genre->name }}</a></div>
+            <div class="col-xs-6"><a href="{{ route('genres.show', $genre->id) }}" title="{{ $genre->name }}">{{ $genre->name }}</a></div>
         @endforeach
     </div>
 </div>
