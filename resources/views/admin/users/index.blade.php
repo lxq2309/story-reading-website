@@ -73,18 +73,18 @@
                                             @else
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->address }}</td>
-                                                <td>{{ $user->date_of_birth }}</td>
-                                                <td>{{ $user->gender }}</td>
+                                                <td>{{ $user->date_of_birth_text }}</td>
+                                                <td>{{ $user->gender_text }}</td>
                                                 <td>
                                                     @switch($user->role)
-                                                        @case(\App\Enums\UserRole::ADMIN->label())
-                                                            <span style="color: red">{{ $user->role }}</span>
+                                                        @case(\App\Enums\UserRole::ADMIN->value)
+                                                            <span style="color: red">{{ $user->role_text }}</span>
                                                             @break
-                                                        @case(\App\Enums\UserRole::POSTER->label())
-                                                            <span style="color: blue">{{ $user->role }}</span>
+                                                        @case(\App\Enums\UserRole::POSTER->value)
+                                                            <span style="color: blue">{{ $user->role_text }}</span>
                                                             @break
-                                                        @case(\App\Enums\UserRole::USER->label())
-                                                            {{ $user->role }}
+                                                        @case(\App\Enums\UserRole::USER->value)
+                                                            {{ $user->role_text }}
                                                             @break
                                                     @endswitch
                                                 </td>

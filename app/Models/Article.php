@@ -13,14 +13,28 @@ class Article extends Model
 
     protected $fillable = ['title', 'description', 'user_id'];
 
-    protected function getCompletedTextAttribute($value)
+    protected function getCompletedTextAttribute()
     {
+        $value = $this->is_completed;
         return ArticleCompleteStatus::from($value)->label();
     }
 
-    protected function getStatusTextAttribute($value)
+    protected function getStatusTextAttribute()
     {
+        $value = $this->status;
         return ArticleStatus::from($value)->label();
+    }
+
+    protected function getViewTextAttribute()
+    {
+        $value = $this->view;
+        return $value . ' lượt xem';
+    }
+
+    protected function getChaptersTextAttribute()
+    {
+        $value = $this->chapters->count();
+        return $value . ' chương';
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -51,9 +51,9 @@
                                     <tbody>
                                     @foreach ($chapters as $chapter)
                                         <tr class="even">
-                                            <td>{{ $chapter->number }}</td>
+                                            <td>{{ $chapter->number_text }}</td>
                                             <td>{{ $chapter->title }}</td>
-                                            <td>{{ $chapter->view }}</td>
+                                            <td>{{ $chapter->view_text }}</td>
                                             <td>{{ $chapter->created_at }}</td>
                                             <td>{{ $chapter->updated_at }}</td>
                                             <td>

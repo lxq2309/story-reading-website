@@ -80,13 +80,13 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('admin.articles.show_chapters', $article->id) }}">
-                                                    {{ $article->chapters->count() . ' chương' }}
+                                                    {{ $article->chapters_text }}
                                                 </a>
                                             </td>
                                             <td> {{ $article->description }}</td>
-                                            <td> {{ $article->view . ' lượt xem' }}</td>
-                                            <td> {{ $article->is_completed }}</td>
-                                            <td> {{ $article->status }}</td>
+                                            <td> {{ $article->view_text }}</td>
+                                            <td> {{ $article->completed_text }}</td>
+                                            <td> {{ $article->status_text }}</td>
                                             <td>{{ $article->user->name }}</td>
                                             <td>{{ $article->created_at }}</td>
                                             <td>{{ $article->updated_at }}</td>
@@ -105,13 +105,13 @@
                                                     method="POST" class="formApprove">
                                                     @csrf
                                                     @method('PATCH')
-                                                    @if($article->status == \App\Enums\ArticleStatus::PENDING->label())
+                                                    @if($article->status == \App\Enums\ArticleStatus::PENDING->value)
                                                         <button type="submit"
                                                                 class="btn btn-secondary btn-sm btnApprove">
                                                             <i
                                                                 class="fa fa-fw fa-check"></i> {{ __('Duyệt bài') }}
                                                         </button>
-                                                    @elseif ($article->status == \App\Enums\ArticleStatus::HIDDEN->label())
+                                                    @elseif ($article->status == \App\Enums\ArticleStatus::HIDDEN->value)
                                                         <button type="submit"
                                                                 class="btn btn-warning btn-sm btnVisible">
                                                             <i
@@ -119,7 +119,7 @@
                                                         </button>
                                                     @endif
                                                 </form>
-                                                @if($article->status == \App\Enums\ArticleStatus::APPROVED->label())
+                                                @if($article->status == \App\Enums\ArticleStatus::APPROVED->value)
                                                     <form
                                                         action="{{ route('admin.articles.change_status', [$article->id, \App\Enums\ArticleStatus::HIDDEN]) }}"
                                                         method="POST" class="formHidden">
@@ -136,13 +136,13 @@
                                                     method="POST" class="formSetCompleted">
                                                     @csrf
                                                     @method('PATCH')
-                                                    @if($article->is_completed == \App\Enums\ArticleCompleteStatus::COMPLETED->label())
+                                                    @if($article->is_completed == \App\Enums\ArticleCompleteStatus::COMPLETED->value)
                                                         <button type="submit"
                                                                 class="btn btn-outline-secondary btn-sm btnSetNotCompleted">
                                                             <i
                                                                 class="fa fa-fw fa-close"></i> {{ __(\App\Enums\ArticleCompleteStatus::NOT_COMPLETED->label()) }}
                                                         </button>
-                                                    @elseif ($article->is_completed == \App\Enums\ArticleCompleteStatus::NOT_COMPLETED->label())
+                                                    @elseif ($article->is_completed == \App\Enums\ArticleCompleteStatus::NOT_COMPLETED->value)
                                                         <button type="submit"
                                                                 class="btn btn-outline-primary btn-sm btnSetCompleted">
                                                             <i

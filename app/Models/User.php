@@ -29,18 +29,21 @@ class User extends Model
         return self::query()->whereIn('id', $bannedUserIds);
     }
 
-    protected function getRoleAttribute($value)
+    protected function getRoleTextAttribute()
     {
+        $value = $this->role;
         return UserRole::from($value)->label();
     }
 
-    protected function getDateOfBirthAttribute($value)
+    protected function getDateOfBirthTextAttribute()
     {
+        $value = $this->date_of_birth;
         return Carbon::parse($value)->format('d-m-Y');
     }
 
-    protected function getGenderAttribute($value)
+    protected function getGenderTextAttribute()
     {
+        $value = $this->gender;
         return Gender::from($value)->label();
     }
 

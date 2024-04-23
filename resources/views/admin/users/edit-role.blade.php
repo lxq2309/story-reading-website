@@ -42,7 +42,7 @@
                                         <select name="role" id="role" class="custom-select form-control">
                                             @foreach(\App\Enums\UserRole::cases() as $role)
                                                 <option
-                                                    value="{{ $role->value }}" {{ old('role', $user->role) == $role->label() ? 'selected' : '' }}>
+                                                    value="{{ $role->value }}" {{ old('role', $user->role) == $role->value ? 'selected' : '' }}>
                                                     {{ $role->label() }}
                                                 </option>
                                             @endforeach
