@@ -55,3 +55,5 @@ Route::get('/doc-nhieu-nhat', [HomeController::class, 'showHotArticles'])->name(
 Route::get('/moi-cap-nhat', [HomeController::class, 'showNewUpdateArticles'])->name('home.show_new_update_articles');
 Route::get('/da-hoan-thanh', [HomeController::class, 'showCompletedArticles'])->name('home.show_completed_articles');
 Route::get('/genres/{genre}', [App\Http\Controllers\Client\GenreController::class, 'show'])->name('genres.show');
+Route::get('/articles/{article}', [App\Http\Controllers\Client\ArticleController::class, 'show'])->name('articles.show');
+Route::get('/articles/{article}/chapters/{number}', [\App\Http\Controllers\Client\ChapterController::class, 'show'])->name('articles.chapters.show');

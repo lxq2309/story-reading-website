@@ -10,6 +10,7 @@ class Chapter extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'content', 'number', 'article_id'];
+    protected $perPage = 50;
 
     protected function getViewTextAttribute(): string
     {
@@ -21,6 +22,22 @@ class Chapter extends Model
     {
         $value = $this->number;
         return 'Chương '.$value;
+    }
+
+    protected function getPreviousAttribute()
+    {
+        $value = $this->number;
+        $previousNumber = $value - 1;
+        $previousChapter = Chapter::query()->where('number', $previousNumber)->first();
+        return $previousChapter;
+    }
+
+    protected function getNextAttribute()
+    {
+        $value = $this->number;
+        $nextNumber = $value + 1;
+        $nextChapter = Chapter::query()->where('number', $nextNumber)->first();
+        return $nextChapter;
     }
 
     public function article(): \Illuminate\Database\Eloquent\Relations\BelongsTo

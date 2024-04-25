@@ -28,20 +28,29 @@ class Article extends Model
     protected function getViewTextAttribute()
     {
         $value = $this->view;
-        return $value . ' lượt xem';
+        return $value.' lượt xem';
     }
 
     protected function getChaptersTextAttribute()
     {
         $value = $this->chapters->count();
-        return $value . ' chương';
+        return $value.' chương';
     }
 
-    protected function getNewestChapterAttribute() : Chapter
+    protected function getNewestChapterAttribute(): Chapter
     {
         $newestChapterNumber = $this->chapters->max('number');
-        $newestChapter = $this->chapters->where('number', $newestChapterNumber)->first();
-        return $newestChapter;
+        return $this->chapters
+            ->where('number', $newestChapterNumber)
+            ->first();
+    }
+
+    protected function getFirstChapterAttribute(): Chapter
+    {
+        $firstChapterNumber = $this->chapters()->min('number');
+        return $this->chapters
+            ->where('number', $firstChapterNumber)
+            ->first();
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -88,5 +97,10 @@ class Article extends Model
         return self::query()
             ->where('is_completed', ArticleCompleteStatus::COMPLETED)
             ->orderByDesc('updated_at');
+    }
+
+    public function getNewestChapters($size
+    ): \Illuminate\Database\Eloquent\Relations\HasMany {
+        return self::chapters()->orderByDesc('number')->take($size);
     }
 }

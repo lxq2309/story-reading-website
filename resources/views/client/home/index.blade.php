@@ -16,8 +16,7 @@
         @foreach($hotArticles as $article)
             <div class="index-intro">
                 <div class="item top-{{ $i }}" itemscope itemtype="https://schema.org/Book">
-                    <!-- else -->
-                    <a href="#" itemprop="url">
+                    <a href="{{ route('articles.show', $article->id) }}" itemprop="url">
                         <!-- nếu đã hoàn thành thì hiện full-label -->
                         @if ($article->is_completed)
                             <span class="full-label"></span>
@@ -60,7 +59,7 @@
                     <div class="col-xs-9 col-sm-6 col-md-5 col-title">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                         <h3 itemprop="name">
-                            <a href="#" itemprop="url">
+                            <a href="{{ route('articles.show', $article->id) }}" itemprop="url">
                                 {{ $article->title }}
                             </a>
                         </h3>
@@ -82,7 +81,7 @@
                         @else
                             <a title="{{ $article->newest_chapter->title }}" href="#">
                             <span class="chapter-text">
-                                {{ $article->newest_chapter->title }}
+                                {{ $article->newest_chapter->number_text }}
                             </span>
                             </a>
                         @endif
@@ -113,7 +112,7 @@
             <div class="row">
                 @foreach($completedArticles as $article)
                     <div class="col-xs-4 col-sm-3 col-md-2">
-                        <a href="#" title="{{ $article->title }}">
+                        <a href="{{ route('articles.show', $article->id) }}" title="{{ $article->title }}">
                             <img src="{{ $article->cover_image }}" width="164" height="245" alt="#"/>
                             <div class="caption">
                                 <h3>

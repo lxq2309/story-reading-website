@@ -20,7 +20,7 @@
                             <div>
                                 <span class="glyphicon glyphicon-book"></span>
                                 <h3 class="truyen-title" itemprop="name">
-                                    <a href="/p/{{ $article->id }}" title="{{ $article->title }}" itemprop="url">
+                                    <a href="{{ route('articles.show', $article->id) }}" title="{{ $article->title }}" itemprop="url">
                                         {{ $article->title }}
                                     </a>
                                 </h3>
@@ -42,7 +42,7 @@
                                 @else
                                     <a title="{{ $article->newest_chapter->title }}"
                                        href="/p/{{ $article->id }}/{{ $article->newest_chapter->number }}">
-                                        <span class="chapter-text">{{ $article->newest_chapter->title }}</span>
+                                        <span class="chapter-text">{{ $article->newest_chapter->number_text }}</span>
                                     </a>
                                 @endif
                             </div>
