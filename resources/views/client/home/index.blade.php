@@ -7,8 +7,10 @@
 @section('content')
     <div class="container" id="intro-index">
         <div class="title-list">
-            <h2><a href="{{ route('home.show_hot_articles') }}" title="Đọc nhiều nhất">Được đọc nhiều nhất</a></h2>
-            <a href="{{ route('home.show_hot_articles') }}" title="Đọc nhiều nhất"><span class="glyphicon glyphicon-fire"></span></a>
+            <h2><a href="{{ route('home.show_hot_articles') }}" title="Đọc nhiều nhất">Được đọc nhiều nhất</a>
+            </h2>
+            <a href="{{ route('home.show_hot_articles') }}" title="Đọc nhiều nhất"><span
+                        class="glyphicon glyphicon-fire"></span></a>
         </div>
         @php
             $i = 1;
@@ -79,9 +81,13 @@
                             Chưa có chương nào
                         </span>
                         @else
-                            <a title="{{ $article->newest_chapter->title }}" href="#">
+                            @php
+                                $newestChapter = $article->newest_chapter;
+                            @endphp
+                            <a title="{{ $newestChapter->title }}"
+                               href="{{ route('articles.chapters.show', [$article->id, $newestChapter->number]) }}">
                             <span class="chapter-text">
-                                {{ $article->newest_chapter->number_text }}
+                                {{ $newestChapter->number_text }}
                             </span>
                             </a>
                         @endif

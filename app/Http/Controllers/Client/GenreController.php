@@ -13,7 +13,7 @@ class GenreController extends Controller
         $articles = $genre->articles()->paginate();
         return view('client.articles.index', [
             'articles' => $articles,
-            'title' => $genre->name,
+            'title' => 'Thể loại ' . $genre->name,
             'description' => $genre->description,
         ]);
     }

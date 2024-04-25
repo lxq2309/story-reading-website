@@ -24,7 +24,8 @@
                         <div>
                             <h3><span class="glyphicon glyphicon-user"></span>&nbsp;Tác giả:</h3>
                             @foreach ($article->authors as $author)
-                                <a itemprop="author" href="#" title="{{ $author->name }}">{{ $author->name }}</a>,
+                                <a itemprop="author" href="{{ route('authors.show', $author->id) }}"
+                                   title="{{ $author->name }}">{{ $author->name }}</a>,
                             @endforeach
                         </div>
                         <div>

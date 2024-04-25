@@ -15,4 +15,11 @@ class Author extends Model
     public $timestamps = false;
 
     protected $fillable = ['name', 'description'];
+
+    public function articles(
+    ): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Article::class, 'articles_authors',
+            'author_id', 'article_id');
+    }
 }

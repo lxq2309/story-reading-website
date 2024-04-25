@@ -57,3 +57,4 @@ Route::get('/da-hoan-thanh', [HomeController::class, 'showCompletedArticles'])->
 Route::get('/genres/{genre}', [App\Http\Controllers\Client\GenreController::class, 'show'])->name('genres.show');
 Route::get('/articles/{article}', [App\Http\Controllers\Client\ArticleController::class, 'show'])->name('articles.show');
 Route::get('/articles/{article}/chapters/{number}', [\App\Http\Controllers\Client\ChapterController::class, 'show'])->name('articles.chapters.show');
+Route::get('/authors/{author}', [\App\Http\Controllers\Client\AuthorController::class, 'show'])->name('authors.show');
