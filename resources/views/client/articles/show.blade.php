@@ -22,22 +22,30 @@
                     </div>
                     <div class="info">
                         <div>
-                            <h3><span class="glyphicon glyphicon-user"></span>&nbsp;Tác giả:</h3>
+                            <h3><span class="glyphicon glyphicon-flag"></span>&nbsp;Tác giả:</h3>
                             @foreach ($article->authors as $author)
                                 <a itemprop="author" href="{{ route('authors.show', $author->id) }}"
                                    title="{{ $author->name }}">{{ $author->name }}</a>,
                             @endforeach
                         </div>
                         <div>
-                            <h3><span class="glyphicon glyphicon-tag"></span>&nbsp;Người đăng:</h3>
-                            <a itemprop="genre" href="#"
-                               title="{{ $article->user->username }}">{{ $article->user->username }}</a>
+                            @php
+                                $user = $article->user;
+                            @endphp
+                            <h3><span class="glyphicon glyphicon-user"></span>&nbsp;Người đăng:</h3>
+                            <a itemprop="username" href="{{ route('users.show_posted_articles', $user->id) }}"
+                               title="{{ $user->username }}">{!! $user->renderUserName() !!}</a>
                         </div>
                         <div>
                             <h3><span class="glyphicon glyphicon-tag"></span>&nbsp;Thể loại:</h3>
                             @foreach($article->genres as $genre)
-                                <a itemprop="genre" href="#" title="{{ $genre->name }}">{{ $genre->name }}</a>
+                                <a itemprop="genre" href="#" title="{{ $genre->name }}">{{ $genre->name }},</a>
                             @endforeach
+                        </div>
+
+                        <div>
+                            <h3><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Lượt xem:</h3>
+                            <a itemprop="view" title="{{ $article->view_text }}">{{ $article->view }}</a>
                         </div>
 
                         <div>
@@ -68,6 +76,12 @@
                         <a id="add-bookmark-btn" class="btn btn-info btn-border">
                             <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;BOOKMARK
                         </a>
+                        @if($currentUser->is_admin || $currentUser->id === $user->id)
+                            <a href="{{ route('admin.articles.edit', $article->id) }}"
+                               class="btn btn-success btn-border">
+                                <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Sửa bài viết
+                            </a>
+                        @endif
                     </div>
 
 
@@ -121,7 +135,7 @@
 
                 </div>
                 <div id="comment" class="col-xs-12 comment-box">
-                    @include('client.partials.comment')
+                    @include('client.partials.comment', ['isUserLoggedIn' => $isUserLoggedIn])
                 </div>
             </div>
         </div>

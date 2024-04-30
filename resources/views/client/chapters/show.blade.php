@@ -11,7 +11,8 @@
                     {{ $article->title }}
                 </a>
                 <h2>
-                    <a class="chapter-title" href="{{ route('articles.chapters.show', [$article->id, $chapter->number]) }}"
+                    <a class="chapter-title"
+                       href="{{ route('articles.chapters.show', [$article->id, $chapter->number]) }}"
                        title="{{ $chapter->title }}">
                     <span class="chapter-text">
                         <span>
@@ -19,7 +20,14 @@
                         </span>
                     </span>
                     </a>
+                    @if($currentUser->is_admin || $currentUser->id === $user->id)
+                        <a href="{{ route('admin.articles.edit_chapter', [$article->id, $chapter->id]) }}"
+                           class="btn btn-block btn-primary btn-border" style="margin-top: 10px">
+                            <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Sửa chương
+                        </a>
+                    @endif
                 </h2>
+
 
                 <hr class="chapter-start"/>
                 <div class="chapter-nav" id="chapter-nav-top">
@@ -28,7 +36,7 @@
 
                 <hr class="chapter-end"/>
                 <div id="chapter-c" class="chapter-c">
-                    {{ $chapter->content }}
+                    {!! nl2br($chapter->content) !!}}
                 </div>
 
                 <hr class="chapter-end" id="chapter-end-bot"/>

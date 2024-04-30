@@ -17,10 +17,9 @@
 
     <div class="col-xs-12">
         <div id="bw_comments" class="tabcontent" data-tab="tab1">
-            @if (true)
+            @if ($isUserLoggedIn)
                 <div class="row">
                     <form id="comment-form">
-                        <input type="hidden" id="article-id" name="articleId" value="@articleId"/>
                         <div class="form-group">
                             <textarea id="comment-content" name="content" class="form-control"></textarea>
                         </div>

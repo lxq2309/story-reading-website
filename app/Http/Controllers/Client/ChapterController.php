@@ -15,6 +15,8 @@ class ChapterController extends Controller
         if (empty($chapter)) {
             abort(404);
         }
+        $article->increment('view');
+        $chapter->increment('view');
         return view('client.chapters.show', [
             'article' => $article,
             'chapter' => $chapter,

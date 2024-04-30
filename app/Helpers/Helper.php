@@ -2,6 +2,7 @@
 
 
 use App\Enums\ArticleStatus;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 if (!function_exists('set_active')) {
@@ -26,5 +27,10 @@ if (!function_exists('set_active')) {
             return false;
         }
         return ArticleStatus::tryFrom($status) != null;
+    }
+
+    function isMyAccount($currentUser, $targetUser): bool
+    {
+        return $currentUser->id === $targetUser->id;
     }
 }

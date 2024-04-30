@@ -14,4 +14,13 @@ enum UserRole: int
             UserRole::ADMIN => 'Quản trị viên',
         };
     }
+
+    public function color() : string
+    {
+        return match ($this) {
+            UserRole::USER => '',
+            UserRole::POSTER => 'darkcyan',
+            UserRole::ADMIN => 'red',
+        };
+    }
 }

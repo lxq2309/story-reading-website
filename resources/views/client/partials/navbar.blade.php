@@ -25,7 +25,8 @@
                         <div class="col-md-4">
                             <ul class="dropdown-menu">
                                 @foreach ($chunk as $genre)
-                                    <li><a href="{{ route('genres.show', $genre['id']) }}" title="{{ $genre['name'] }}">{{ $genre['name'] }}</a></li>
+                                    <li><a href="{{ route('genres.show', $genre['id']) }}"
+                                           title="{{ $genre['name'] }}">{{ $genre['name'] }}</a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -34,47 +35,64 @@
             </div>
         </li>
         <li class="dropdown">
-            @if (\Illuminate\Support\Facades\Auth::check() == false)
+            @if (!$isUserLoggedIn)
                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-user"></span> Tài khoản <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
 
-                    <li><a href="/login" title="Đăng nhập">Đăng nhập</a></li>
-                    <li><a href="/register" title="Đăng ký">Đăng ký</a></li>
+                    <li><a href="{{ route('login') }}" title="Đăng nhập">Đăng nhập</a></li>
+                    <li><a href="{{ route('register') }}" title="Đăng ký">Đăng ký</a></li>
                 </ul>
             @else
                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user"></span> @Model.UserName <span class="caret"></span>
+                    <span class="glyphicon glyphicon-user"></span> {!! $currentUser->renderUserName() !!}
+                    <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    @if (session('role') == \App\Enums\UserRole::ADMIN)
-                        <li><a href="{{ route('admin.dashboard') }}" title="Admin Panel"><i class="fa fa-cog"
+                    @if ($currentUser->is_admin)
+                        <li>
+                            <a href="{{ route('admin.dashboard') }}" title="Admin Panel"><i class="fa fa-cog"
                                                                                             aria-hidden="true"></i>
                                 Admin
-                                Panel</a></li>
-                        <li><a href="{{ route('admin.articles.create') }}" title="Thêm bài viết"><i class="fa fa-plus"
-                                                                                                    aria-hidden="true"></i>
+                                Panel</a>
+                        </li>
+                    @endif
+                    @if($currentUser->is_poster || $currentUser->is_admin)
+                        <li><a href="{{ route('admin.articles.create') }}" title="Thêm bài viết"><i
+                                    class="fa fa-plus"
+                                    aria-hidden="true"></i>
                                 Thêm bài viêt</a>
                         </li>
-                        <li><a href="{{ route('admin.authors.create') }}" title="Thêm tác giả"><i class="fa fa-plus"
-                                                                                                  aria-hidden="true"></i>
-                                Thêm tác giả</a></li>
-                        <li><a href="{{ route('admin.genres.create') }}" title="Thêm thể loại"><i class="fa fa-plus"
-                                                                                                  aria-hidden="true"></i>
-                                Thêm thể loại</a></li>
-                        <li><a href="{{ route('admin.menus.create') }}" title="Thêm link"><i class="fa fa-plus"
-                                                                                             aria-hidden="true"></i>
-                                Thêm link</a></li>
                     @endif
-                    <li><a href="/tai-khoan/" title="Thông tin tài khoản"><i class="fa fa-solid fa-circle-info"></i>
+                    @if($currentUser->is_admin)
+                        <li>
+                            <a href="{{ route('admin.authors.create') }}" title="Thêm tác giả"><i class="fa fa-plus"
+                                                                                                  aria-hidden="true"></i>
+                                Thêm tác giả</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.genres.create') }}" title="Thêm thể loại"><i class="fa fa-plus"
+                                                                                                  aria-hidden="true"></i>
+                                Thêm thể loại</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.menus.create') }}" title="Thêm link"><i class="fa fa-plus"
+                                                                                             aria-hidden="true"></i>
+                                Thêm link</a>
+                        </li>
+                    @endif
+                    <li><a href="{{ route('users.show', $currentUser->id) }}" title="Thông tin tài khoản"><i
+                                class="fa fa-solid fa-circle-info"></i>
                             Thông tin tài khoản</a></li>
-                    <li><a href="/tai-khoan/?query=bookmark" title="Bookmark"><i
+                    <li><a href="{{ route('users.show_bookmarks', $currentUser->id) }}" title="Bookmark"><i
                                 class="fa fa-solid fa-bookmark"></i> Bookmark</a></li>
-                    <li><a href="/tai-khoan/?query=posted_article" title="Bài viết đã đăng"><i
+                    <li><a href="{{ route('users.show_posted_articles', $currentUser->id) }}"
+                           title="Bài viết đã đăng"><i
                                 class="fa fa-list"></i> Bài viết đã đăng</a></li>
                     <li>
-                        <form asp-controller="User" asp-action="Logout" method="post" id="logout">
+                        <form action="{{ route('logout') }}" method="post" id="logout">
+                            @csrf
                             <button type="submit"><i class="fa fa-sign-out"></i> Đăng xuất</button>
                         </form>
                     </li>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\UserController as UserAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,21 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/users/change-password', [UserAuthController::class, 'changePassword'])->name('users.change_password');
+    Route::get('/users/change-info', [UserAuthController::class, 'changeInfo'])->name('users.change_info');
+    Route::get('/users/{user}/posted-articles', [UserAuthController::class, 'showPostedArticles'])->name('users.show_posted_articles');
+    Route::get('/users/{user}/bookmarks', [UserAuthController::class, 'showBookmarks'])->name('users.show_bookmarks');
+    Route::get('/profile', [UserAuthController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [UserAuthController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [UserAuthController::class, 'destroy'])->name('profile.destroy');
+});
+Route::get('/users/{user?}', [UserAuthController::class, 'show'])->middleware(['auth', 'verified'])->name('users.show');
+
+require __DIR__.'/auth.php';
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
