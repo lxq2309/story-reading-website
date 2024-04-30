@@ -76,7 +76,7 @@
                         <a id="add-bookmark-btn" class="btn btn-info btn-border">
                             <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;BOOKMARK
                         </a>
-                        @if($currentUser->is_admin || $currentUser->id === $user->id)
+                        @if($isUserLoggedIn && ($currentUser->is_admin || $currentUser->id === $user->id))
                             <a href="{{ route('admin.articles.edit', $article->id) }}"
                                class="btn btn-success btn-border">
                                 <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Sửa bài viết
@@ -135,7 +135,7 @@
 
                 </div>
                 <div id="comment" class="col-xs-12 comment-box">
-                    @include('client.partials.comment', ['isUserLoggedIn' => $isUserLoggedIn])
+                    @include('client.partials.comment')
                 </div>
             </div>
         </div>

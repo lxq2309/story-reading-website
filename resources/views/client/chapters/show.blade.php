@@ -20,7 +20,7 @@
                         </span>
                     </span>
                     </a>
-                    @if($currentUser->is_admin || $currentUser->id === $user->id)
+                    @if($isUserLoggedIn && ($currentUser->is_admin || $currentUser->id === $user->id))
                         <a href="{{ route('admin.articles.edit_chapter', [$article->id, $chapter->id]) }}"
                            class="btn btn-block btn-primary btn-border" style="margin-top: 10px">
                             <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Sửa chương
