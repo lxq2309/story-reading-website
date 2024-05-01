@@ -6,6 +6,7 @@ use App\Enums\Gender;
 use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -13,11 +14,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
 class User extends Model implements AuthenticatableContract,
-    CanResetPasswordContract
+    CanResetPasswordContract, MustVerifyEmailContract
 {
-    use HasFactory, Authenticatable, Notifiable, CanResetPassword;
+    use HasFactory, Authenticatable, Notifiable, CanResetPassword, MustVerifyEmail;
 
     protected $fillable
         = [
@@ -120,6 +122,11 @@ class User extends Model implements AuthenticatableContract,
     {
         $value = $this->gender;
         return Gender::from($value)->label();
+    }
+
+    public function getVerifiedStatusTextAttribute()
+    {
+        return $this->hasVerifiedEmail() ? 'Đã xác thực' : 'Chưa xác thực';
     }
 
 

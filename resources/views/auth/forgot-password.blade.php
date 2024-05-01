@@ -1,7 +1,12 @@
 @extends('layout.client')
+
+@section('template_title')
+    {{ 'Quên mật khẩu' }}
+@endsection
+
 @section('content')
-    <div id="login-signup-form">
-        <div class="row">
+    <div id="login-signup-form" class="py-5">
+        <div class="row justify-content-center">
             <div class="col-sm-offset-3 col-sm-6">
                 <div id="forgot-password-form">
                     <form action="{{ route('password.email') }}" method="POST">
@@ -15,33 +20,20 @@
                         </div>
                     </form>
                 </div>
+                @if(session('status'))
+                    <div class="alert alert-success mt-3">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @if($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+                <div class="text-muted mt-4">
+                    {{ 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.' }}
+                </div>
             </div>
         </div>
     </div>
-@endsection
-@section('hidden')
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')"/>
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')"/>
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                          autofocus/>
-            <x-input-error :messages="$errors->get('email')" class="mt-2"/>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
 @endsection

@@ -46,7 +46,8 @@
                 </ul>
             @else
                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user"></span> {!! $currentUser->renderUserName() !!}
+                    <span class="glyphicon glyphicon-user"></span>
+                    {!! $currentUser->renderUserName() !!}
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
@@ -102,6 +103,9 @@
     </ul>
 
     <form class="navbar-form navbar-right" role="search" action="{{ route('home.search') }}">
+        @if($isUserLoggedIn && !$currentUser->hasVerifiedEmail())
+            <a href="{{ route('verification.notice') }}" class="btn btn-danger">Bấm vào đây để xác thực email</a>
+        @endif
         <div class="input-group search-holder">
             <input aria-label="Keyword search" class="form-control" type="search" name="keyword"
                    placeholder="Tìm kiếm theo tên truyện" value="" itemprop="query-input" required/>

@@ -31,6 +31,10 @@ if (!function_exists('set_active')) {
 
     function isMyAccount($currentUser, $targetUser): bool
     {
+        if (empty($currentUser) || empty($targetUser))
+        {
+            return false;
+        }
         return $currentUser->id === $targetUser->id;
     }
 }

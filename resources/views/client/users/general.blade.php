@@ -79,6 +79,13 @@
                                 {!! $user->renderRoleText() !!}
                             </div>
                         </div>
+
+                        <div class="group">
+                            <div class="label">Trạng thái</div>
+                            <div class="detail">
+                                {{ $user->verified_status_text }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
