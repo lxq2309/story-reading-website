@@ -111,7 +111,7 @@
 
 
     <script>
-
+        // Ẩn hiện menu chọn chapter
         $(document).ready(function () {
             $('select.chapter_jump').hide();
             $('button.chapter_jump').click(function () {
@@ -120,6 +120,12 @@
             });
         });
 
+        // Ngăn sự kiện keydown ở thanh tìm kiếm bị "nổi lên"
+        $('.search-holder input[type="search"]').keydown(function (event) {
+            event.stopPropagation();
+        });
+
+        // Chuyển chapter bằng bàn phím
         $(document).keydown(function (event) {
             if (event.keyCode == 65 || event.keyCode == 37) { // A or Left arrow
                 // Chuyển đến chương trước
