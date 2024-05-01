@@ -1,3 +1,16 @@
+# Triển khai
+- Trang khách: https://story-reading.lxq.id.vn
+- Trang quản trị: https://story-reading.lxq.id.vn/admin
+## Tài khoản người dùng
+- Email: user.test@mail.com
+- Password: 12345678
+- ## Tài khoản người đăng bài
+- Email: poster.test@mail.com
+- Password: 12345678
+- ## Tài khoản người quản trị
+- Email: admin.test@mail.com
+- Password: 12345678
+
 # Mô tả dữ liệu
 
 1: Mô tả bảng Articles
