@@ -21,6 +21,7 @@ class ChapterController extends Controller
             'article' => $article,
             'chapter' => $chapter,
             'articleChapters' => $article->chapters()->orderBy('number', 'desc')->get(),
+            'user' => $article->user,
         ]);
     }
 }

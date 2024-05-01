@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Author;
 
-use App\Http\Requests\Admin\BaseRequest;
+use App\Http\Requests\BaseRequest;
 
 class AuthorBaseRequest extends BaseRequest
 {

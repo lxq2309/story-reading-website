@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Chapter;
 
-use App\Http\Requests\Admin\BaseRequest;
+use App\Http\Requests\BaseRequest;
 
 class ChapterBaseRequest extends BaseRequest
 {

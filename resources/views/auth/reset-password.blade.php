@@ -5,7 +5,7 @@
 @section('content')
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-sm-offset-3 col-sm-6">
                 <div class="card">
                     <div class="card-body">
                         <form method="POST" action="{{ route('password.store') }}">
@@ -19,7 +19,7 @@
                                 <label for="email" class="form-label">{{ __('Email') }}</label>
                                 <input id="email" type="email" class="form-control" name="email"
                                        value="{{ old('email', $request->email) }}" required autofocus
-                                       autocomplete="username">
+                                       autocomplete="username" readonly>
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
@@ -27,7 +27,7 @@
 
                             <!-- Password -->
                             <div class="form-group mt-3">
-                                <label for="password" class="form-label">{{ __('Password') }}</label>
+                                <label for="password" class="form-label">{{ __('Mật khẩu mới') }}</label>
                                 <input id="password" type="password" class="form-control" name="password" required
                                        autocomplete="new-password">
                                 @if ($errors->has('password'))
@@ -38,7 +38,7 @@
                             <!-- Confirm Password -->
                             <div class="form-group mt-3">
                                 <label for="password_confirmation"
-                                       class="form-label">{{ __('Confirm Password') }}</label>
+                                       class="form-label">{{ __('Nhập lại mật khẩu') }}</label>
                                 <input id="password_confirmation" type="password" class="form-control"
                                        name="password_confirmation" required autocomplete="new-password">
                                 @if ($errors->has('password_confirmation'))
@@ -48,7 +48,7 @@
 
                             <div class="d-flex justify-content-end mt-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
+                                    {{ __('Đặt lại mật khẩu') }}
                                 </button>
                             </div>
                         </form>

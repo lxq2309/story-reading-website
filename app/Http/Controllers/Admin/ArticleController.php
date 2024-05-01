@@ -11,6 +11,7 @@ use App\Models\Article;
 use App\Models\Author;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -19,7 +20,15 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $articles = article::query()->orderByDesc("id");
+        $currentUser = Auth::user();
+        // if currentUser is Admin
+        if ($currentUser->is_admin) {
+            $articles = Article::query();
+        } else {
+            // else currentUser is Poster
+            $articles = $currentUser->articles();
+        }
+        $articles->orderByDesc("id");
         if ($request->has('search')) {
             $searchText = $request->input('search');
             $articles->where('title', 'like', '%'.$searchText.'%');
@@ -53,7 +62,8 @@ class ArticleController extends Controller
     {
         $request->validated();
         $validateData = $request->all();
-        $validateData['user_id'] = 299;
+        $currentUser = Auth::user();
+        $validateData['user_id'] = $currentUser->id;
         $article = Article::create($validateData);
         $article->genres()->attach($validateData['genres']);
         $article->authors()->attach($validateData['authors']);
@@ -149,11 +159,10 @@ class ArticleController extends Controller
         $article->save();
         if ($article->is_completed) {
             $message = 'Thay đổi trạng thái thành đã hoàn thành thành công!';
-        }
-        else
-        {
+        } else {
             $message = 'Thay đổi trạng thái thành chưa hoàn thành thành công!';
         }
-        return redirect()->route('admin.articles.index')->with('success', $message);
+        return redirect()->route('admin.articles.index')
+            ->with('success', $message);
     }
 }

@@ -129,6 +129,23 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasVerifiedEmail() ? 'Đã xác thực' : 'Chưa xác thực';
     }
 
+    public function hasAnyRole(array $roles)
+    {
+        foreach ($roles as $role) {
+            if ($this->hasRole($role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasRole($role) : bool
+    {
+        return $this->role === $role;
+    }
+
+
 
     public function banned(): \Illuminate\Database\Eloquent\Relations\HasOne
     {

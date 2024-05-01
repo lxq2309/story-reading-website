@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\User\UpdateUserRequest;
 use App\Models\BannedUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -136,7 +137,7 @@ class UserController extends Controller
         $request->validated();
         $bannedUser = new BannedUser();
         $bannedUser->user_id = $user->id;
-        $bannedUser->admin_id = 299;
+        $bannedUser->admin_id = Auth::user()->getAuthIdentifier();
         $bannedUser->reason = $request->reason;
         $bannedUser->expired_at = now()->addDays($request->ban_days);
         $bannedUser->save();

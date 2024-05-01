@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Genre;
 
-use App\Http\Requests\Admin\BaseRequest;
+use App\Http\Requests\BaseRequest;
 
 class GenreBaseRequest extends BaseRequest
 {

@@ -13,7 +13,8 @@
                         @csrf
                         <div class="form-group">
                             <label for="email" class="control-label">Nhập địa chỉ email</label>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" autocomplete="username" placeholder="example@email.com" />
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control"
+                                   autocomplete="username" placeholder="example@email.com"/>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Xác nhận</button>
@@ -31,7 +32,7 @@
                     </div>
                 @endif
                 <div class="text-muted mt-4">
-                    {{ 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.' }}
+                    {{ 'Quên mật khẩu? Đừng lo lắng. Chỉ cần cho chúng tôi biết địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn liên kết đặt lại mật khẩu qua email để cho phép bạn chọn mật khẩu mới.' }}
                 </div>
             </div>
         </div>

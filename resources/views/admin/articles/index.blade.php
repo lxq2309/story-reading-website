@@ -92,7 +92,7 @@
                                             <td>{{ $article->updated_at }}</td>
                                             <td>
                                                 <a class="btn btn-sm btn-primary"
-                                                   href="{{ route('admin.articles.show', $article->id) }}"><i
+                                                   href="{{ route('articles.show', $article->id) }}"><i
                                                         class="fa fa-fw fa-eye"></i> {{ __('Chi tiết') }}</a>
                                                 <a class="btn btn-sm btn-info"
                                                    href="{{ route('admin.articles.create_chapter', $article->id) }}"><i
@@ -100,57 +100,59 @@
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('admin.articles.edit', $article->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i> {{ __('Sửa') }}</a>
-                                                <form
-                                                    action="{{ route('admin.articles.change_status', [$article->id, \App\Enums\ArticleStatus::APPROVED]) }}"
-                                                    method="POST" class="formApprove">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    @if($article->status == \App\Enums\ArticleStatus::PENDING->value)
-                                                        <button type="submit"
-                                                                class="btn btn-secondary btn-sm btnApprove">
-                                                            <i
-                                                                class="fa fa-fw fa-check"></i> {{ __('Duyệt bài') }}
-                                                        </button>
-                                                    @elseif ($article->status == \App\Enums\ArticleStatus::HIDDEN->value)
-                                                        <button type="submit"
-                                                                class="btn btn-warning btn-sm btnVisible">
-                                                            <i
-                                                                class="fa fa-fw fa-check"></i> {{ __('Hiện bài') }}
-                                                        </button>
-                                                    @endif
-                                                </form>
-                                                @if($article->status == \App\Enums\ArticleStatus::APPROVED->value)
+                                                @if($currentUser->is_admin)
                                                     <form
-                                                        action="{{ route('admin.articles.change_status', [$article->id, \App\Enums\ArticleStatus::HIDDEN]) }}"
-                                                        method="POST" class="formHidden">
+                                                        action="{{ route('admin.articles.change_status', [$article->id, \App\Enums\ArticleStatus::APPROVED]) }}"
+                                                        method="POST" class="formApprove">
                                                         @csrf
                                                         @method('PATCH')
-                                                        <button type="submit" class="btn btn-dark btn-sm btnHidden">
-                                                            <i
-                                                                class="fa fa-fw fa-eye-slash"></i> {{ __('Ẩn bài') }}
-                                                        </button>
+                                                        @if($article->status == \App\Enums\ArticleStatus::PENDING->value)
+                                                            <button type="submit"
+                                                                    class="btn btn-secondary btn-sm btnApprove">
+                                                                <i
+                                                                    class="fa fa-fw fa-check"></i> {{ __('Duyệt bài') }}
+                                                            </button>
+                                                        @elseif ($article->status == \App\Enums\ArticleStatus::HIDDEN->value)
+                                                            <button type="submit"
+                                                                    class="btn btn-warning btn-sm btnVisible">
+                                                                <i
+                                                                    class="fa fa-fw fa-check"></i> {{ __('Hiện bài') }}
+                                                            </button>
+                                                        @endif
+                                                    </form>
+                                                    @if($article->status == \App\Enums\ArticleStatus::APPROVED->value)
+                                                        <form
+                                                            action="{{ route('admin.articles.change_status', [$article->id, \App\Enums\ArticleStatus::HIDDEN]) }}"
+                                                            method="POST" class="formHidden">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button type="submit" class="btn btn-dark btn-sm btnHidden">
+                                                                <i
+                                                                    class="fa fa-fw fa-eye-slash"></i> {{ __('Ẩn bài') }}
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                    <form
+                                                        action="{{ route('admin.articles.change_complete_status', $article->id) }}"
+                                                        method="POST" class="formSetCompleted">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        @if($article->is_completed == \App\Enums\ArticleCompleteStatus::COMPLETED->value)
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-secondary btn-sm btnSetNotCompleted">
+                                                                <i
+                                                                    class="fa fa-fw fa-close"></i> {{ __(\App\Enums\ArticleCompleteStatus::NOT_COMPLETED->label()) }}
+                                                            </button>
+                                                        @elseif ($article->is_completed == \App\Enums\ArticleCompleteStatus::NOT_COMPLETED->value)
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-primary btn-sm btnSetCompleted">
+                                                                <i
+                                                                    class="fa fa-fw fa-check"></i> {{ __(\App\Enums\ArticleCompleteStatus::COMPLETED->label()) }}
+                                                            </button>
+                                                        @endif
+
                                                     </form>
                                                 @endif
-                                                <form
-                                                    action="{{ route('admin.articles.change_complete_status', $article->id) }}"
-                                                    method="POST" class="formSetCompleted">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    @if($article->is_completed == \App\Enums\ArticleCompleteStatus::COMPLETED->value)
-                                                        <button type="submit"
-                                                                class="btn btn-outline-secondary btn-sm btnSetNotCompleted">
-                                                            <i
-                                                                class="fa fa-fw fa-close"></i> {{ __(\App\Enums\ArticleCompleteStatus::NOT_COMPLETED->label()) }}
-                                                        </button>
-                                                    @elseif ($article->is_completed == \App\Enums\ArticleCompleteStatus::NOT_COMPLETED->value)
-                                                        <button type="submit"
-                                                                class="btn btn-outline-primary btn-sm btnSetCompleted">
-                                                            <i
-                                                                class="fa fa-fw fa-check"></i> {{ __(\App\Enums\ArticleCompleteStatus::COMPLETED->label()) }}
-                                                        </button>
-                                                    @endif
-
-                                                </form>
                                                 <form
                                                     action="{{ route('admin.articles.destroy', $article->id) }}"
                                                     method="POST" class="formDelete">

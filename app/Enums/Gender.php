@@ -2,8 +2,8 @@
 namespace App\Enums;
 enum Gender: int
 {
-    case FEMALE = 0;
-    case MALE = 1;
+    case MALE = 0;
+    case FEMALE = 1;
 
     public function label(): string
     {

@@ -51,13 +51,16 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                         class="fas fa-bars"></i></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('home.index') }}" role="button">Về trang khách</a>
+            </li>
 
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#changePasswordModal" href="#"
+                <a class="nav-link" href="{{ route('users.change_password') }}"
                    role="button" title="Đổi mật khẩu">
                     <i class="fa-solid fa-key"></i>
                 </a>
@@ -69,13 +72,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" onclick="logout()" role="button" title="Đăng xuất">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                </a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button class="btn btn-link nav-link" role="button" title="Đăng xuất">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </button>
+                </form>
             </li>
-            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -94,13 +97,12 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="{{ $currentUser->avatar }}" class="img-circle elevation-2"
+                         alt="{{ $currentUser->username }}">
                 </div>
                 <div class="info">
-                    @php
-                        $adminName = session('admin_name');
-                    @endphp
-                    <a href="#" class="d-block">{{ $adminName }}</a>
+                    <a href="{{ route('users.show', $currentUser->id) }}"
+                       class="d-block">{!! $currentUser->renderUserName() !!}</a>
                 </div>
             </div>
 
@@ -121,95 +123,104 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <li class="nav-item">
-                        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ set_active('admin.dashboard') }}">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Trang tổng quan
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item menu-is-opening menu-open">
-                        <a href="#" class="nav-link {{ set_active('admin.users.*') }}">
-                            <i class="fa-solid fa-user"></i>
-                            <p>
-                                Quản lý tài khoản
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview" style="display: block;">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}"
-                                   class="nav-link {{ set_active('admin.users.index') }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>
-                                        Tất cả tài khoản
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.banned') }}"
-                                   class="nav-link {{ set_active('admin.users.banned') }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>
-                                        Tài khoản bị cấm
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.poster') }}"
-                                   class="nav-link {{ set_active('admin.users.poster') }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>
-                                        Tài khoản người đăng bài
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.admin') }}"
-                                   class="nav-link {{ set_active('admin.users.admin') }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>
-                                        Tài khoản quản trị viên
-                                    </p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.articles.index') }}"
-                           class="nav-link {{ set_active('admin.articles.*') }}">
-                            <i class="fa-solid fa-newspaper"></i>
-                            <p>
-                                Truyện
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.authors.index') }}"
-                           class="nav-link {{ set_active('admin.authors.*') }}">
-                            <i class="fa-solid fa-pen"></i>
-                            <p>
-                                Tác giả
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.genres.index') }}" class="nav-link {{ set_active('admin.genres.*') }}">
-                            <i class="fa-solid fa-bars"></i>
-                            <p>
-                                Thể loại
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.menus.index') }}" class="nav-link {{ set_active('admin.menus.*') }}">
-                            <i class="fa-solid fa-folder"></i>
-                            <p>
-                                Menu
-                            </p>
-                        </a>
-                    </li>
+                    @if($currentUser->is_admin)
+                        <li class="nav-item">
+                            <a href="{{ route('admin.dashboard') }}"
+                               class="nav-link {{ set_active('admin.dashboard') }}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Trang tổng quan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-is-opening menu-open">
+                            <a href="#" class="nav-link {{ set_active('admin.users.*') }}">
+                                <i class="fa-solid fa-user"></i>
+                                <p>
+                                    Quản lý tài khoản
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: block;">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.users.index') }}"
+                                       class="nav-link {{ set_active('admin.users.index') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Tất cả tài khoản
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.users.banned') }}"
+                                       class="nav-link {{ set_active('admin.users.banned') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Tài khoản bị cấm
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.users.poster') }}"
+                                       class="nav-link {{ set_active('admin.users.poster') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Tài khoản người đăng bài
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.users.admin') }}"
+                                       class="nav-link {{ set_active('admin.users.admin') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Tài khoản quản trị viên
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                    @if($currentUser->is_poster || $currentUser->is_admin)
+                        <li class="nav-item">
+                            <a href="{{ route('admin.articles.index') }}"
+                               class="nav-link {{ set_active('admin.articles.*') }}">
+                                <i class="fa-solid fa-newspaper"></i>
+                                <p>
+                                    Truyện
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                    @if($currentUser->is_admin)
+                        <li class="nav-item">
+                            <a href="{{ route('admin.authors.index') }}"
+                               class="nav-link {{ set_active('admin.authors.*') }}">
+                                <i class="fa-solid fa-pen"></i>
+                                <p>
+                                    Tác giả
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.genres.index') }}"
+                               class="nav-link {{ set_active('admin.genres.*') }}">
+                                <i class="fa-solid fa-bars"></i>
+                                <p>
+                                    Thể loại
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.menus.index') }}"
+                               class="nav-link {{ set_active('admin.menus.*') }}">
+                                <i class="fa-solid fa-folder"></i>
+                                <p>
+                                    Menu
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -232,7 +243,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Home</a></li>
                             <li class="breadcrumb-item active">
                                 @if (trim($__env->yieldContent('template_title')))
                                     @yield('template_title')

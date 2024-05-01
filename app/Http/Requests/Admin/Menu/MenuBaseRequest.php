@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Menu;
 
-use App\Http\Requests\Admin\BaseRequest;
+use App\Http\Requests\BaseRequest;
 
 class MenuBaseRequest extends BaseRequest
 {

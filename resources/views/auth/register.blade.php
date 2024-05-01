@@ -17,28 +17,44 @@
                                         <label for="username">UserName</label>
                                         <input type="text" class="form-control" id="username" name="username"
                                                value="{{ old('username') }}" required>
+                                        @if ($errors->has('username'))
+                                            <span class="text-danger">{{ $errors->first('username') }}</span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control" id="email" name="email"
-                                               value="{{ old('email') }}" placeholder="example@email.com" required autocomplete="username">
+                                               value="{{ old('email') }}" placeholder="example@email.com" required
+                                               autocomplete="username">
+                                        @if ($errors->has('email'))
+                                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Mật khẩu</label>
                                         <input type="password" class="form-control" id="password" name="password"
                                                value="{{ old('password') }}" required>
+                                        @if ($errors->has('password'))
+                                            <span class="text-danger">{{ $errors->first('password') }}</span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="password_confirmation">Xác nhận mật khẩu</label>
                                         <input type="password" class="form-control" id="password_confirmation"
                                                name="password_confirmation" value="{{ old('password_confirmation') }}"
                                                required>
+                                        @if ($errors->has('password_confirmation'))
+                                            <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Họ và tên</label>
+                                        <label for="name">Họ và tên <small>(Tuỳ chọn)</small></label>
                                         <input type="text" class="form-control" id="name" name="name"
                                                value="{{ old('name') }}"
                                                required>
+                                        @if ($errors->has('name'))
+                                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                                        @endif
                                     </div>
 
                                     <div class="login-action">
@@ -56,69 +72,3 @@
         </div>
     </form>
 @endsection
-
-{{--@section('hide')--}}
-{{--    <x-guest-layout>--}}
-{{--        <form method="POST" action="{{ route('register') }}">--}}
-{{--            @csrf--}}
-
-{{--            <!-- Username -->--}}
-{{--            <div>--}}
-{{--                <x-input-label for="name" :value="__('Name')"/>--}}
-{{--                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required--}}
-{{--                              autofocus autocomplete="name"/>--}}
-{{--                <x-input-error :messages="$errors->get('name')" class="mt-2"/>--}}
-{{--            </div>--}}
-
-{{--            <!-- Name -->--}}
-{{--            <div>--}}
-{{--                <x-input-label for="name" :value="__('Name')"/>--}}
-{{--                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required--}}
-{{--                              autofocus autocomplete="name"/>--}}
-{{--                <x-input-error :messages="$errors->get('name')" class="mt-2"/>--}}
-{{--            </div>--}}
-
-{{--            <!-- Email Address -->--}}
-{{--            <div class="mt-4">--}}
-{{--                <x-input-label for="email" :value="__('Email')"/>--}}
-{{--                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"--}}
-{{--                              required autocomplete="username"/>--}}
-{{--                <x-input-error :messages="$errors->get('email')" class="mt-2"/>--}}
-{{--            </div>--}}
-
-{{--            <!-- Password -->--}}
-{{--            <div class="mt-4">--}}
-{{--                <x-input-label for="password" :value="__('Password')"/>--}}
-
-{{--                <x-text-input id="password" class="block mt-1 w-full"--}}
-{{--                              type="password"--}}
-{{--                              name="password"--}}
-{{--                              required autocomplete="new-password"/>--}}
-
-{{--                <x-input-error :messages="$errors->get('password')" class="mt-2"/>--}}
-{{--            </div>--}}
-
-{{--            <!-- Confirm Password -->--}}
-{{--            <div class="mt-4">--}}
-{{--                <x-input-label for="password_confirmation" :value="__('Confirm Password')"/>--}}
-
-{{--                <x-text-input id="password_confirmation" class="block mt-1 w-full"--}}
-{{--                              type="password"--}}
-{{--                              name="password_confirmation" required autocomplete="new-password"/>--}}
-
-{{--                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2"/>--}}
-{{--            </div>--}}
-
-{{--            <div class="flex items-center justify-end mt-4">--}}
-{{--                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"--}}
-{{--                   href="{{ route('login') }}">--}}
-{{--                    {{ __('Already registered?') }}--}}
-{{--                </a>--}}
-
-{{--                <x-primary-button class="ms-4">--}}
-{{--                    {{ __('Register') }}--}}
-{{--                </x-primary-button>--}}
-{{--            </div>--}}
-{{--        </form>--}}
-{{--    </x-guest-layout>--}}
-{{--@endsection--}}
