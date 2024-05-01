@@ -59,9 +59,7 @@
 
                 <div class="col-xs-12">
                     <div id="demo" class="collapse">
-                        <div id="fb-comments" class="fb-comments" data-href=""
-                             style="width: 100%;" data-width="100%" data-order-by="reverse_time"
-                             data-numposts="5"></div>
+                        @include('client.partials.comment')
                     </div>
                     <div class="row" id="chapter_comment">
                     </div>
@@ -125,11 +123,11 @@
         $(document).keydown(function (event) {
             if (event.keyCode == 65 || event.keyCode == 37) { // A or Left arrow
                 // Chuyển đến chương trước
-                window.location.href = '@linkPrevious';
+                window.location.href = '{{ $chapter->previous?->number }}';
             } else if (event.keyCode == 68 || event.keyCode == 39) { // D or Right arrow
                 // Chuyển đến chương sau
 
-                window.location.href = '@linkNext';
+                window.location.href = '{{ $chapter->next?->number }}';
             }
         });
     </script>
