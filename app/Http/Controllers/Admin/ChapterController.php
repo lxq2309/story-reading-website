@@ -56,6 +56,8 @@ class ChapterController extends Controller
         $validateData = $request->all();
         $validateData['article_id'] = $article->id;
         $chapter = Chapter::create($validateData);
+        $article->setUpdatedAt(now());
+        $article->save();
         return redirect()->route('admin.articles.show_chapters', $article->id)
             ->with('success', 'Thêm chương mới thành công!');
     }

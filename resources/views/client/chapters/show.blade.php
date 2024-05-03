@@ -36,7 +36,7 @@
 
                 <hr class="chapter-end"/>
                 <div id="chapter-c" class="chapter-c">
-                    {!! nl2br($chapter->content) !!}}
+                    {!! nl2br($chapter->content) !!}
                 </div>
 
                 <hr class="chapter-end" id="chapter-end-bot"/>
