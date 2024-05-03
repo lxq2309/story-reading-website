@@ -9,9 +9,13 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public function getCreatedAtTextAttribute()
+    protected function getCreatedAtTextAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+    protected function getUpdatedAtTextAttribute()
+    {
+        return $this->updated_at->diffForHumans();
     }
 
     public function article(): \Illuminate\Database\Eloquent\Relations\BelongsTo

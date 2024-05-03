@@ -15,12 +15,14 @@
                             {{ __('Thêm chương mới') }}
                         </a>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('admin.articles.index') }}"> {{ __('Trở lại') }}</a>
+                            <a class="btn btn-primary"
+                               href="{{ route('admin.articles.index') }}"> {{ __('Trở lại') }}</a>
                         </div>
                     </div>
 
                     <div class="search">
-                        <form id="searchForm" action="{{ route('admin.articles.show_chapters', $article->id) }}" method="GET">
+                        <form id="searchForm" action="{{ route('admin.articles.show_chapters', $article->id) }}"
+                              method="GET">
                             <input type="search" id="searchInput" class="form-control form-control-sm"
                                    placeholder="Tìm kiếm theo tên chương" name="search">
                         </form>
@@ -52,16 +54,18 @@
                                     @foreach ($chapters as $chapter)
                                         <tr class="even">
                                             <td>{{ $chapter->number_text }}</td>
-                                            <td>{{ $chapter->title }}</td>
+                                            <td>
+                                                <a href="{{ route('articles.chapters.show', [$article->id, $chapter->number]) }}">{{ $chapter->title }}</a>
+                                            </td>
                                             <td>{{ $chapter->view_text }}</td>
-                                            <td>{{ $chapter->created_at }}</td>
-                                            <td>{{ $chapter->updated_at }}</td>
+                                            <td title="{{ $chapter->created_at }}">{{ $chapter->created_at_text }}</td>
+                                            <td title="{{ $chapter->updated_at }}">{{ $chapter->updated_at_text }}</td>
                                             <td>
                                                 <form
                                                     action="{{ route('admin.articles.destroy_chapter', [$article->id, $chapter->id]) }}"
                                                     method="POST" class="formDelete">
                                                     <a class="btn btn-sm btn-primary"
-                                                       href="#"><i
+                                                       href="{{ route('articles.chapters.show', [$article->id, $chapter->number]) }}"><i
                                                             class="fa fa-fw fa-eye"></i> {{ __('Chi tiết') }}</a>
                                                     <a class="btn btn-sm btn-success"
                                                        href="{{ route('admin.articles.edit_chapter', [$article->id, $chapter->id]) }}"><i

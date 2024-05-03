@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Bookmark extends Model
 {
     use HasFactory;
+    protected function getCreatedAtTextAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+    protected function getUpdatedAtTextAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

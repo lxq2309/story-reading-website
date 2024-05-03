@@ -33,7 +33,7 @@
                                 <a class="comic-name"
                                    href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a>
                                 <div class="follow-action">
-                                    <time class="time"><i class="fa-solid fa-calendar"></i> {{ $article->updated_at }}
+                                    <time class="time" title="{{ $article->updated_at }}"><i class="fa-solid fa-calendar"></i> {{ $article->updated_at_text }}
                                     </time>
                                 </div>
                             </td>

@@ -47,6 +47,7 @@
                                             <th>Giới tính</th>
                                             <th>Vai trò</th>
                                         @endif
+                                        <th>Ngày tạo tài khoản</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -54,7 +55,7 @@
                                     @foreach ($users as $user)
                                         <tr class="even">
                                             <td>{{ $user->id }}</td>
-                                            <td><img src="{{ asset($user->avatar) }}" alt="{{ $user->username }}"></td>
+                                            <td><img src="{{ asset($user->avatar) }}" alt="{{ $user->username }}" width="50px"></td>
                                             <td>
                                                 @if($user->banned)
                                                     <s>{{ $user->username }}</s>
@@ -67,8 +68,8 @@
                                             @if(is_route('admin.users.banned'))
                                                 <td>{{ $user->banned->reason }}</td>
                                                 <td>{{ $user->banned->remaining_days }}</td>
-                                                <td>{{ $user->banned->created_at }}</td>
-                                                <td>{{ $user->banned->updated_at }}</td>
+                                                <td title="{{ $user->banned->created_at }}">{{ $user->banned->created_at_text }}</td>
+                                                <td title="{{ $user->banned->updated_at }}">{{ $user->banned->updated_at_text }}</td>
                                                 <td>{{ $user->banned->admin->name }}</td>
                                             @else
                                                 <td>{{ $user->email }}</td>
@@ -89,8 +90,8 @@
                                                     @endswitch
                                                 </td>
                                             @endif
+                                            <td title="{{ $user->created_at }}">{{ $user->created_at_text }}</td>
                                             <td>
-
                                                 <a class="btn btn-sm btn-primary"
                                                    href="{{ route('admin.users.edit', $user->id) }}"><i
                                                         class="fa fa-fw fa-eye"></i> {{ __('Chi tiết') }}</a>

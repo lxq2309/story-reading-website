@@ -59,12 +59,12 @@
                                             <td>{{ $article->id }}</td>
                                             <td>
                                                 <img src="{{ $article->cover_image }}" alt="{{ $article->title }}"
-                                                     width="200px">
+                                                     width="100px">
                                             </td>
-                                            <td>{{ $article->title }}</td>
+                                            <td><a href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a></td>
                                             <td>
                                                 @foreach($article->authors as $author)
-                                                    <a href="{{ route('admin.authors.show', $author->id) }}"
+                                                    <a href="{{ route('authors.show', $author->id) }}"
                                                        class="badge badge-primary">
                                                         {{ $author->name }}
                                                     </a>
@@ -72,7 +72,7 @@
                                             </td>
                                             <td>
                                                 @foreach($article->genres as $genre)
-                                                    <a href="{{ route('admin.genres.show', $genre->id) }}"
+                                                    <a href="{{ route('genres.show', $genre->id) }}"
                                                        class="badge badge-success">
                                                         {{ $genre->name }}
                                                     </a>
@@ -88,8 +88,8 @@
                                             <td> {{ $article->completed_text }}</td>
                                             <td> {{ $article->status_text }}</td>
                                             <td>{{ $article->user->name }}</td>
-                                            <td>{{ $article->created_at }}</td>
-                                            <td>{{ $article->updated_at }}</td>
+                                            <td title="{{ $article->created_at }}">{{ $article->created_at_text }}</td>
+                                            <td title="{{ $article->updated_at }}">{{ $article->updated_at_text }}</td>
                                             <td>
                                                 <a class="btn btn-sm btn-primary"
                                                    href="{{ route('articles.show', $article->id) }}"><i

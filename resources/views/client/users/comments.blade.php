@@ -52,7 +52,7 @@
                                 @endif
                             </td>
                             <td class="nowrap chapter">
-                                <time class="time">{{ $comment->created_at_text }}</time>
+                                <time class="time" title="{{ $comment->created_at }}">{{ $comment->created_at_text }}</time>
                             </td>
                             <td class="nowrap chapter">
                                 <time class="time">{!! nl2br($comment->content) !!}</time>

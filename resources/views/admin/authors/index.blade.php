@@ -47,7 +47,7 @@
                                     @foreach ($authors as $author)
                                         <tr class="even">
                                             <td>{{ $author->id }}</td>
-                                            <td>{{ $author->name }}</td>
+                                            <td><a href="{{ route('authors.show', $author->id) }}">{{ $author->name }}</a></td>
                                             <td>{{ $author->description }}</td>
                                             <td>
                                                 <form

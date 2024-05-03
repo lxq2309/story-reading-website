@@ -128,6 +128,14 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasVerifiedEmail() ? 'Đã xác thực' : 'Chưa xác thực';
     }
+    protected function getCreatedAtTextAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+    protected function getUpdatedAtTextAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
 
     public function hasAnyRole(array $roles)
     {

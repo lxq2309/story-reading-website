@@ -39,6 +39,14 @@ class Chapter extends Model
         $nextChapter = Chapter::query()->where('number', $nextNumber)->first();
         return $nextChapter;
     }
+    protected function getCreatedAtTextAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+    protected function getUpdatedAtTextAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
 
     public function article(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

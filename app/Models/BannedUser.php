@@ -18,6 +18,14 @@ class BannedUser extends Model
 
         return $remainingDays . ' ngày';
     }
+    protected function getCreatedAtTextAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+    protected function getUpdatedAtTextAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
 
     public function user()
     {

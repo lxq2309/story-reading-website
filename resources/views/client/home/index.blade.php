@@ -93,7 +93,7 @@
                         @endif
                     </div>
                     <div class="hidden-xs hidden-sm col-md-2 col-time text-888">
-                        {{ $article->updated_at }}
+                        {{ $article->updated_at_text }}
                     </div>
                 </div>
             @endforeach

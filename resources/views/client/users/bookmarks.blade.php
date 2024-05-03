@@ -73,7 +73,10 @@
                                        title="{{ $newestChapter->title }}">{{ $newestChapter->number_text }}</a>
                                 @endif
                                 <br>
-                                <time class="time">{{ $newestChapter->updated_at }}</time>
+                                <time class="time"
+                                      title="{{ $newestChapter->updated_at }}">
+                                    {{ $newestChapter->updated_at_text }}
+                                </time>
                             </td>
                             <td class="nowrap chapter">
                                 <a class="comic-name">{{ $bookmark->name }}</a>
@@ -82,10 +85,10 @@
                                 <a class="comic-name">{{ $bookmark->description }}</a>
                             </td>
                             <td class="nowrap chapter">
-                                <a class="comic-name">{{ $bookmark->created_at }}</a>
+                                <a class="comic-name" title="{{ $bookmark->created_at }}">{{ $bookmark->created_at_text }}</a>
                             </td>
                             <td class="nowrap chapter">
-                                <a class="comic-name">{{ $bookmark->updated_at }}</a>
+                                <a class="comic-name" title="{{ $bookmark->updated_at }}">{{ $bookmark->updated_at_text }}</a>
                             </td>
                         </tr>
                     @endforeach
