@@ -69,10 +69,12 @@
                     </div>
 
                     <div class="group-buttons">
-                        <a href="{{ route('articles.chapters.show', [$article->id, $article->first_chapter->number]) }}"
-                           class="btn btn-danger btn-style btn-border">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;ĐỌC TỪ ĐẦU
-                        </a>
+                        @if(!$chapters->isEmpty())
+                            <a href="{{ route('articles.chapters.show', [$article->id, $article->first_chapter->number]) }}"
+                               class="btn btn-danger btn-style btn-border">
+                                <span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;ĐỌC TỪ ĐẦU
+                            </a>
+                        @endif
                         <a id="add-bookmark-btn" class="btn btn-info btn-border">
                             <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;BOOKMARK
                         </a>
@@ -84,25 +86,26 @@
                         @endif
                     </div>
 
-
-                    <div class="l-chapter">
-                        <div class="l-title">
-                            <h3>Chương mới nhất</h3>
-                        </div>
-                        <ul class="l-chapters">
-                            @foreach ($article->getNewestChapters(10)->get() as $chapter)
-                                <li>
-                                    <span class="glyphicon glyphicon-certificate"></span>
-                                    <a href="{{ route('articles.chapters.show', [$article->id, $chapter->number]) }}"
-                                       title="{{ $chapter->title }}">
+                    @if(!$chapters->isEmpty())
+                        <div class="l-chapter">
+                            <div class="l-title">
+                                <h3>Chương mới nhất</h3>
+                            </div>
+                            <ul class="l-chapters">
+                                @foreach ($article->getNewestChapters(10)->get() as $chapter)
+                                    <li>
+                                        <span class="glyphicon glyphicon-certificate"></span>
+                                        <a href="{{ route('articles.chapters.show', [$article->id, $chapter->number]) }}"
+                                           title="{{ $chapter->title }}">
                                     <span class="chapter-text">
                                         {{ $chapter->number_text . ': ' . $chapter->title }}
                                     </span>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="col-xs-12" id="list-chapter">
@@ -110,24 +113,30 @@
                     <h2>Danh sách chương</h2>
                 </div>
                 <div class="row">
-                    @foreach(array_chunk($chapters->items(), 25) as $chunk)
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <ul class="list-chapter">
-                                @foreach($chunk as $chapter)
-                                    <li>
-                                        <span class="glyphicon glyphicon-certificate"></span>
-                                        <a href="{{ route('articles.chapters.show', [$article->id, $chapter['number']]) }}"
-                                           title="{{ $chapter['title'] }}">
+                    @if(!$chapters->isEmpty())
+                        @foreach(array_chunk($chapters->items(), 25) as $chunk)
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <ul class="list-chapter">
+                                    @foreach($chunk as $chapter)
+                                        <li>
+                                            <span class="glyphicon glyphicon-certificate"></span>
+                                            <a href="{{ route('articles.chapters.show', [$article->id, $chapter['number']]) }}"
+                                               title="{{ $chapter['title'] }}">
                                     <span class="chapter-text">
                                         {{ $chapter['number_text'] . ': ' . $chapter['title'] }}
                                     </span>
-                                        </a>
-                                    </li>
-                                @endforeach
+                                            </a>
+                                        </li>
+                                    @endforeach
 
-                            </ul>
-                        </div>
-                    @endforeach
+                                </ul>
+                            </div>
+                        @endforeach
+                    @else
+                        <p>
+                            Hiện truyện chưa có chương nào, bạn vui lòng đợi nhé ^^
+                        </p>
+                    @endif
 
                     <div id="pagination">
                         {{ $chapters->links() }}
