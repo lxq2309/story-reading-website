@@ -57,6 +57,7 @@ class Article extends Model
     {
         return $this->created_at->diffForHumans();
     }
+
     protected function getUpdatedAtTextAttribute()
     {
         return $this->updated_at->diffForHumans();
@@ -118,8 +119,17 @@ class Article extends Model
         return self::chapters()->orderByDesc('number')->take($size);
     }
 
-    public function getNewestCommentsPaginate($perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function getNewestCommentsPaginate($perPage = 10
+    ): \Illuminate\Contracts\Pagination\LengthAwarePaginator {
+        return self::comments()->orderByDesc('updated_at')
+            ->paginate($perPage, ['*'], 'comment_page');
+    }
+
+    public function increaseViewCount()
     {
-        return self::comments()->orderByDesc('updated_at')->paginate($perPage, ['*'], 'comment_page');
+        $this->timestamps = false;
+        $this->increment('view');
+        $this->save();
+        $this->timestamps = true;
     }
 }

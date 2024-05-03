@@ -52,4 +52,12 @@ class Chapter extends Model
     {
         return $this->belongsTo(Article::class, 'article_id', 'id');
     }
+
+    public function increaseViewCount()
+    {
+        $this->timestamps = false;
+        $this->increment('view');
+        $this->save();
+        $this->timestamps = true;
+    }
 }

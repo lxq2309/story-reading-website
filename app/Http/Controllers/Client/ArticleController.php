@@ -11,7 +11,7 @@ class ArticleController extends Controller
 {
     public function show(Article $article)
     {
-        $article->increment('view');
+        $article->increaseViewCount();
         $chapters = $article->chapters()->paginate();
         $comments = $article->getNewestCommentsPaginate(2);
         return view('client.articles.show', [
