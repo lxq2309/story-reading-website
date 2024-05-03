@@ -107,6 +107,10 @@
                 width: 100%;
             }
         }
+
+        #demo {
+            text-align: left;
+        }
     </style>
 
 
@@ -118,11 +122,6 @@
                 $('button.chapter_jump').hide();
                 $('select.chapter_jump').show();
             });
-        });
-
-        // Ngăn sự kiện keydown ở thanh tìm kiếm bị "nổi lên"
-        $('.search-holder input[type="search"]').keydown(function (event) {
-            event.stopPropagation();
         });
 
         // Chuyển chapter bằng bàn phím

@@ -38,7 +38,7 @@
                                             href="{{ route('users.show_posted_articles', $user->id) }}"><i
                                                 class="fa fa-list"></i> Bài viết đã
                                             đăng</a></li>
-                                    <li class="hvr-sweep-to-right"><a href="#"><i class="fa fa-comments"></i> Bình luận</a>
+                                    <li class="hvr-sweep-to-right {{ set_active('users.show_comments') }}"><a href="{{ route('users.show_comments', $user->id) }}"><i class="fa fa-comments"></i> Bình luận</a>
                                     </li>
                                     @if (isMyAccount($currentUser, $user))
                                         <li class="hvr-sweep-to-right {{ set_active('users.change_password') }}">

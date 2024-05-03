@@ -17,11 +17,13 @@ class ChapterController extends Controller
         }
         $article->increment('view');
         $chapter->increment('view');
+        $comments = $article->getNewestCommentsPaginate(2);
         return view('client.chapters.show', [
             'article' => $article,
             'chapter' => $chapter,
             'articleChapters' => $article->chapters()->orderBy('number', 'desc')->get(),
             'user' => $article->user,
+            'comments' => $comments,
         ]);
     }
 }

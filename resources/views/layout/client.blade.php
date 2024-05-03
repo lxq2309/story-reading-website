@@ -41,6 +41,12 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0"
         nonce="ggm0ulbL"></script>
+<script !src="">
+    // Ngăn sự kiện keydown ở thanh tìm kiếm bị "nổi lên"
+    $('.search-holder input[type="search"]').keydown(function (event) {
+        event.stopPropagation();
+    });
+</script>
 @yield('comment-article-scripts')
 </body>
 </html>

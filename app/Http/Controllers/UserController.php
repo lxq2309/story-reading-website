@@ -58,27 +58,6 @@ class UserController extends Controller
             ->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
-
     public function changeInfo(Request $request): View
     {
         return view('client.users.change-info', [
@@ -88,7 +67,7 @@ class UserController extends Controller
 
     public function showPostedArticles(User $user): View
     {
-        $articles = $user->articles()->paginate();
+        $articles = $user->articles()->orderByDesc('updated_at')->paginate();
         return view('client.users.posted-articles', [
             'articles' => $articles,
             'user' => $user,
@@ -97,9 +76,18 @@ class UserController extends Controller
 
     public function showBookmarks(User $user): View
     {
-        $bookmarks = $user->bookmarks()->paginate();
+        $bookmarks = $user->bookmarks()->orderByDesc('updated_at')->paginate();
         return view('client.users.bookmarks', [
             'bookmarks' => $bookmarks,
+            'user' => $user,
+        ]);
+    }
+
+    public function showComments(User $user): View
+    {
+        $comments = $user->comments()->orderByDesc('created_at')->paginate();
+        return view('client.users.comments', [
+            'comments' => $comments,
             'user' => $user,
         ]);
     }

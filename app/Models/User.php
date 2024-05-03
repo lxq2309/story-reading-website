@@ -161,4 +161,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany(Bookmark::class, 'user_id', 'id');
     }
+
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
 }

@@ -21,14 +21,15 @@
                     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                         <a href="/"
                            accesskey="1"><span class="glyphicon glyphicon-home"></span></a><a href="/"
-                                                                                              title="@GeneralSetting.Title"
+                                                                                              title="Home"
                                                                                               itemprop="item"><span
                                 itemprop="name">Trang chủ</span></a>
                         <meta itemprop="position" content="1"/>
                     </li>
                 @endif
                 <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                    <a href="#" title="#" itemprop="item"><span itemprop="name">@yield('template_title')</span></a>
+                    <a href="{{ url()->current() }}" title="@yield('template_title')" itemprop="item"><span
+                            itemprop="name">@yield('template_title')</span></a>
                     <meta itemprop="position" content="2"/>
                 </li>
             </ol>

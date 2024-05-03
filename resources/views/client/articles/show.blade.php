@@ -110,7 +110,7 @@
                     <h2>Danh sách chương</h2>
                 </div>
                 <div class="row">
-                    @foreach(array_chunk($chaptersPaginate->items(), 25) as $chunk)
+                    @foreach(array_chunk($chapters->items(), 25) as $chunk)
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <ul class="list-chapter">
                                 @foreach($chunk as $chapter)
@@ -130,7 +130,7 @@
                     @endforeach
 
                     <div id="pagination">
-                        {{ $chaptersPaginate->links() }}
+                        {{ $chapters->links() }}
                     </div>
 
                 </div>

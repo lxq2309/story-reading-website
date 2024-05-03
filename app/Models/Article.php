@@ -77,6 +77,11 @@ class Article extends Model
         return $this->hasMany(Chapter::class, 'article_id', 'id');
     }
 
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class, 'article_id', 'id');
+    }
+
     public static function getHotArticles(
     ): \Illuminate\Database\Eloquent\Builder
     {
@@ -102,5 +107,10 @@ class Article extends Model
     public function getNewestChapters($size
     ): \Illuminate\Database\Eloquent\Relations\HasMany {
         return self::chapters()->orderByDesc('number')->take($size);
+    }
+
+    public function getNewestCommentsPaginate($perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return self::comments()->orderByDesc('updated_at')->paginate($perPage, ['*'], 'comment_page');
     }
 }

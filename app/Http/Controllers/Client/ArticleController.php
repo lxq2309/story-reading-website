@@ -12,10 +12,12 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $article->increment('view');
-        $chaptersPaginate = $article->chapters()->paginate();
+        $chapters = $article->chapters()->paginate();
+        $comments = $article->getNewestCommentsPaginate(2);
         return view('client.articles.show', [
             'article' => $article,
-            'chaptersPaginate' => $chaptersPaginate,
+            'chapters' => $chapters,
+            'comments' => $comments,
         ]);
     }
 }
