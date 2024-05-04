@@ -22,13 +22,24 @@
 </head>
 
 @php
-    $bodyId = match (true) {
-        is_route('genres.*') => "body_cat",
-        is_route('articles.*') => "body_truyen",
-        is_route('authors.*') => "body_author",
-        is_route('articles.view_chapter') => "body_chapter",
-        default => "body_home",
-    };
+    switch (true)
+    {
+        case is_route('genres.*'):
+                $bodyId = "body_cat";
+            break;
+            case is_route('articles.*'):
+                $bodyId = "body_truyen";
+            break;
+            case is_route('authors.*'):
+                $bodyId = "body_author";
+            break;
+            case is_route('articles.view_chapter'):
+                $bodyId = "body_chapter";
+            break;
+            default:
+                $bodyId = "body_home";
+                break;
+    }
 @endphp
 
 <body id="{{ $bodyId }}">

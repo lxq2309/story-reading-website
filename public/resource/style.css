@@ -7350,8 +7350,7 @@ h4,
     text-indent: -9999px;
     white-space: nowrap;
     outline: none;
-    margin: 0;
-    margin-top: 7px;
+    margin: 7px 0 0;
     background-size: contain;
 }
 
@@ -10210,7 +10209,6 @@ h4,
     width: 100%;
     position: relative;
     padding-left: 44px;
-    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -10668,4 +10666,8 @@ h4,
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+}
+
+#wrap > .container, #account-information {
+    min-height: calc(100vh - 200px);
 }
