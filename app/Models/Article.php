@@ -4,12 +4,21 @@ namespace App\Models;
 
 use App\Enums\ArticleCompleteStatus;
 use App\Enums\ArticleStatus;
+use App\Scopes\ApprovedArticleScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
     use HasFactory;
+    protected static function boot()
+    {
+        parent::boot();
+        if (!is_route('admin.*'))
+        {
+            static::addGlobalScope(new ApprovedArticleScope());
+        }
+    }
 
     protected $fillable = ['title', 'description', 'user_id'];
 

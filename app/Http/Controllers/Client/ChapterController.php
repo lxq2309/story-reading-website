@@ -17,7 +17,7 @@ class ChapterController extends Controller
         }
         $chapter->increaseViewCount();
         $article->increaseViewCount();
-        $comments = $article->getNewestCommentsPaginate(2);
+        $comments = $article->getNewestCommentsPaginate();
         return view('client.chapters.show', [
             'article' => $article,
             'chapter' => $chapter,

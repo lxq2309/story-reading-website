@@ -13,7 +13,7 @@ class ArticleController extends Controller
     {
         $article->increaseViewCount();
         $chapters = $article->chapters()->paginate();
-        $comments = $article->getNewestCommentsPaginate(2);
+        $comments = $article->getNewestCommentsPaginate();
         return view('client.articles.show', [
             'article' => $article,
             'chapters' => $chapters,
