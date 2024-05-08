@@ -341,6 +341,23 @@
 <script src="/dist/js/pages/dashboard.js"></script>
 <script src="/dist/js/custom.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script !src="">
+    function debounce(func, wait, immediate) {
+        let timeout;
+        return function() {
+            let context = this, args = arguments;
+            let later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            let callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+</script>
+@yield('ArticleScripts');
 <script>
     function logout() {
         event.preventDefault();

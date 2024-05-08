@@ -20,7 +20,7 @@ class Article extends Model
         }
     }
 
-    protected $fillable = ['title', 'description', 'user_id'];
+    protected $fillable = ['title', 'description', 'user_id', 'cover_image'];
 
     protected function getCompletedTextAttribute()
     {

@@ -64,6 +64,8 @@ class ArticleController extends Controller
         $validateData = $request->all();
         $currentUser = Auth::user();
         $validateData['user_id'] = $currentUser->id;
+        // Xử lý lưu tệp tải lên
+        $validateData = $this->uploadCoverImage($request, $validateData);
         $article = Article::create($validateData);
         $article->genres()->attach($validateData['genres']);
         $article->authors()->attach($validateData['authors']);
@@ -104,6 +106,9 @@ class ArticleController extends Controller
     {
         $request->validated();
         $validateData = $request->all();
+        // Xử lý lưu tệp tải lên
+        $validateData = $this->uploadCoverImage($request, $validateData);
+//        dd($validateData);
         $article->update($validateData);
 
         if (!empty($validateData['genres'])) {
@@ -164,5 +169,30 @@ class ArticleController extends Controller
         }
         return redirect()->route('admin.articles.index')
             ->with('success', $message);
+    }
+
+    /**
+     * @param  UpdateArticleRequest  $request
+     * @param  array  $validateData
+     *
+     * @return array
+     */
+    private function uploadCoverImage(
+        UpdateArticleRequest $request,
+        array $validateData
+    ): array {
+        if ($request->hasFile('cover_image')) {
+            $image = $request->file('cover_image');
+            $imageName = time().'-'.$image->getClientOriginalName();
+            $image->move(public_path('images/articles'), $imageName);
+            $validateData['cover_image'] = '/images/articles/'.$imageName;
+        } else {
+            if ($validateData['cover_image_url']) {
+                $validateData['cover_image'] = $validateData['cover_image_url'];
+            } else {
+                $validateData['cover_image'] = '/images/articles/default.jpg';
+            }
+        }
+        return $validateData;
     }
 }
