@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Article;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -85,7 +86,7 @@ class UserController extends Controller
 
     public function showComments(User $user): View
     {
-        $comments = $user->comments()->orderByDesc('created_at')->paginate();
+        $comments = $user->comments()->whereHas(lcfirst(class_basename(Article::class)))->orderByDesc('created_at')->paginate();
         return view('client.users.comments', [
             'comments' => $comments,
             'user' => $user,
