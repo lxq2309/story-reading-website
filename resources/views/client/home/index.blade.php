@@ -72,7 +72,7 @@
                     </div>
                     <div class="hidden-xs col-sm-3 col-md-3 col-cat text-888">
                         @foreach ($article->genres as $genre)
-                            <a itemprop="genre" href="#" title="{{ $genre->name }}">{{ $genre->name }}</a>,
+                            <a itemprop="genre" href="{{ route('genres.show', $genre->id) }}" title="{{ $genre->name }}">{{ $genre->name }}</a>,
                         @endforeach
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-2 col-chap text-info">

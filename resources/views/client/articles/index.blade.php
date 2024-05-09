@@ -31,7 +31,10 @@
                                 @foreach ($article->authors as $author)
                                     <span class="author" itemprop="author">
                                         <span class="glyphicon glyphicon-pencil"></span>
+                                        <a href="{{ route('authors.show', $author->id) }}" title="{{ $author->name }}"
+                                           itemprop="author">
                                         {{ $author->name }}
+                                    </a>
                                     </span>
                                 @endforeach
                             </div>
