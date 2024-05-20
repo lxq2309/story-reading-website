@@ -5,7 +5,9 @@
 
 @section('user_content')
     <div id="changeInfoResult">
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="{{ route('users.update') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('patch')
             <div class="user-page clearfix">
                 <h1 class="postname">
                     Thông tin tài khoản
@@ -14,17 +16,21 @@
                     <h2 class="posttitle">Cập nhật thông tin tài khoản</h2>
                     <div class="account-form clearfix">
                         <div class="row">
-
                             <div class="col-md-9 col-sm-8">
+                                @if($message = session('status'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="username" class="control-label">UserName</label>
                                     <input value="{{ old('username', $user->username) }}" name="username" id="username" type="text"
-                                           class="form-control" readonly>
+                                           class="form-control" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="control-label">Email</label>
                                     <input value="{{ old('email', $user->email) }}" name="email" id="email" type="email"
-                                           class="form-control" required>
+                                           class="form-control" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="name" class="control-label">Tên đầy đủ</label>
@@ -45,7 +51,7 @@
                                 <div class="form-group">
                                     <label for="date_of_birth" class="control-label">Ngày sinh</label>
                                     <div class="input-group date" data-provide="datepicker">
-                                        <input value="{{ $user->date_of_birth }}" type="date" name="date_of_birth"
+                                        <input value="{{ $user->date_of_birth_text }}" type="date" name="date_of_birth"
                                                id="date_of_birth" class="form-control">
                                         <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -54,15 +60,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="phone_number" class="control-label">Số điện thoại</label>
-                                    <input value="{{ old('phone_number', $user->phone_number) }}" type="text"
-                                           name="phone_number" id="phone_number" class="form-control">
-                                </div>
-
-                                <div class="form-group">
                                     <label for="address" class="control-label">Địa chỉ</label>
-                                    <textarea name="address" id="address" class="form-control" cols="30"
-                                              rows="10">{{ $user->address }}</textarea>
+                                    <input value="{{ $user->address }}" name="address" id="address" class="form-control">
                                 </div>
 
                                 <div class="form-group">

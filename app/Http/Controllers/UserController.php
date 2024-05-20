@@ -47,16 +47,24 @@ class UserController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-
+        $request->validated();
+        $user = $request->user();
+        $validatedData = $request->all();
+        if($request->hasfile('avatar')) {
+            $image = $request->file('avatar');
+            $imageName = $user->id . '.' . $image->extension();
+            $image->move(public_path('images/users'), $imageName);
+            $validatedData['avatar'] = '/images/users/' . $imageName;
+        }
+        $request->user()->fill($validatedData);
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')
-            ->with('status', 'profile-updated');
+        return redirect()->route('users.change_info')
+            ->with('status', 'Cập nhật thông tin tài khoản thành công!');
     }
 
     public function changeInfo(Request $request): View
@@ -86,7 +94,9 @@ class UserController extends Controller
 
     public function showComments(User $user): View
     {
-        $comments = $user->comments()->whereHas(lcfirst(class_basename(Article::class)))->orderByDesc('created_at')->paginate();
+        $comments = $user->comments()
+            ->whereHas(lcfirst(class_basename(Article::class)))
+            ->orderByDesc('created_at')->paginate();
         return view('client.users.comments', [
             'comments' => $comments,
             'user' => $user,

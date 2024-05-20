@@ -23,7 +23,7 @@ class User extends Model implements AuthenticatableContract,
 
     protected $fillable
         = [
-            'username', 'name', 'email', 'password', 'avatar', 'description',
+            'username', 'name', 'email', 'password', 'avatar', 'description', 'address',
             'role', 'date_of_birth', 'gender', 'remember_token'
         ];
 
@@ -115,7 +115,7 @@ class User extends Model implements AuthenticatableContract,
     protected function getDateOfBirthTextAttribute()
     {
         $value = $this->date_of_birth;
-        return Carbon::parse($value)->format('d-m-Y');
+        return Carbon::parse($value)->toDateString();
     }
 
     protected function getGenderTextAttribute()

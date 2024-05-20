@@ -64,15 +64,6 @@
                             </div>
                         @endif
 
-                        @if (!empty($user->description))
-                            <div class="group">
-                                <div class="label">Giới thiệu</div>
-                                <div class="detail">
-                                    {{ $user->description }}
-                                </div>
-                            </div>
-                        @endif
-
                         <div class="group">
                             <div class="label">Vai trò</div>
                             <div class="detail">
@@ -86,6 +77,15 @@
                                 {{ $user->verified_status_text }}
                             </div>
                         </div>
+
+                        @if (!empty($user->description))
+                            <div class="group">
+                                <div class="label">Giới thiệu</div>
+                                <div class="detail">
+                                    {!! nl2br($user->description) !!}
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
