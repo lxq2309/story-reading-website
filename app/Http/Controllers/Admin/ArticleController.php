@@ -108,7 +108,8 @@ class ArticleController extends Controller
         $validateData = $request->all();
         // Xử lý lưu tệp tải lên
         $validateData = $this->uploadCoverImage($request, $validateData);
-//        dd($validateData);
+        // Ngăn không cho cập nhật giá trị của trường updated_at = now
+        $article->timestamps = false;
         $article->update($validateData);
 
         if (!empty($validateData['genres'])) {
@@ -122,6 +123,9 @@ class ArticleController extends Controller
         } else {
             $article->authors()->detach();
         }
+
+        // Bật lại chức năng tự động cập nhật trường updated_at để không ảnh hưởng tới các chức năng khác
+        $article->timestamps = false;
 
         return redirect()->route('admin.articles.index')
             ->with('success', 'Sửa thông tin truyện thành công!');
