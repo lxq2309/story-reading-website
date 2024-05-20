@@ -72,7 +72,7 @@
                         @if(!$chapters->isEmpty())
                             <a href="{{ route('articles.chapters.show', [$article->id, $article->first_chapter->number]) }}"
                                class="btn btn-danger btn-style btn-border">
-                                <span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;ĐỌC TỪ ĐẦU
+                                <span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;Đọc từ đầu
                             </a>
                         @endif
                         @if($isUserLoggedIn)
@@ -81,17 +81,17 @@
                             @endphp
                             @if(empty($bookmarkForCurrentUser))
                                 <a id="add-bookmark-btn" class="btn btn-info btn-border">
-                                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;THÊM DẤU TRANG
+                                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Dấu trang
                                 </a>
                             @else
                                 <a id="delete-bookmark-btn" class="btn btn-success btn-border">
-                                    <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;ĐÃ THÊM DẤU TRANG
+                                    <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Đã thêm dấu trang
                                 </a>
                                 <form
-                                        id="delete-bookmark-form"
-                                        style="display: none"
-                                        method="POST"
-                                        action="{{ route('articles.bookmarks.destroy', [$article->id, $bookmarkForCurrentUser->id]) }}">
+                                    id="delete-bookmark-form"
+                                    style="display: none"
+                                    method="POST"
+                                    action="{{ route('articles.bookmarks.destroy', [$article->id, $bookmarkForCurrentUser->id]) }}">
                                     @csrf
                                     @method('DELETE')
                                 </form>
@@ -102,6 +102,10 @@
                             <a href="{{ route('admin.articles.edit', $article->id) }}"
                                class="btn btn-primary btn-border">
                                 <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Sửa bài viết
+                            </a>
+                            <a href="{{ route('admin.articles.create_chapter', $article->id) }}"
+                               class="btn btn-warning btn-border">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Chương mới
                             </a>
                         @endif
                     </div>

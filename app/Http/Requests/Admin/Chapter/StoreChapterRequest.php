@@ -9,11 +9,12 @@ class StoreChapterRequest extends ChapterBaseRequest
 {
     public function rules(): array
     {
+        $articleId = $this->route()->parameter('article')->id;
         return [
             'title' => 'required',
             'number' => [
                 'required',
-                Rule::unique(Chapter::class),
+                Rule::unique(Chapter::class)->where('article_id', $articleId),
             ],
             'content' => 'required',
         ];

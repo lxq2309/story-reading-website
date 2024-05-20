@@ -25,6 +25,10 @@
                            class="btn btn-block btn-primary btn-border" style="margin-top: 10px">
                             <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Sửa chương
                         </a>
+                        <a href="{{ route('admin.articles.create_chapter', $article->id) }}"
+                           class="btn btn-warning btn-border" style="margin-top: 10px">
+                            <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Chương mới
+                        </a>
                     @endif
                 </h2>
 
