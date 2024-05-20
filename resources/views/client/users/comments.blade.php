@@ -5,6 +5,11 @@
 
 @section('user_content')
     <div class="col-xs-12" id="comments">
+        @if($message = session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ $message }}
+            </div>
+        @endif
         <section class="user-table clearfix">
             <div class="table-responsive">
                 <table class="table">

@@ -8,6 +8,11 @@
         $isMyAccount = isMyAccount($currentUser, $user);
     @endphp
     <div class="col-xs-12" id="bookmarks">
+        @if($message = session('bookmark_success'))
+            <div class="alert alert-success" role="alert">
+                {{ $message }}
+            </div>
+        @endif
         <section class="comics-followed comics-followed-nopaging user-table clearfix">
             <div class="table-responsive">
                 <table class="table">
@@ -54,29 +59,35 @@
                                    href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a>
                                 @if ($isMyAccount)
                                     <div class="follow-action">
-                                        <a href="javascript:void(0)" class="follow-link"
-                                           data-bookmark-id="@bookmark.BookmarkId">
-                                            <i class="fa fa-times">
-                                            </i> Xoá
-                                        </a>
+                                        <form
+                                            action="{{ route('articles.bookmarks.destroy', [$article->id, $bookmark->id]) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-link follow-link">
+                                                <i class="fa fa-times">
+                                                </i> Xoá
+                                            </button>
+                                        </form>
                                     </div>
                                 @endif
                             </td>
                             <td class="chapter">
                                 @php
                                     $newestChapter = $article->newest_chapter;
+                                    $isEmptyNewestChapter = empty($newestChapter);
                                 @endphp
-                                @if (empty($newestChapter))
+                                @if ($isEmptyNewestChapter)
                                     <a href="#">Chưa có chương nào</a>
                                 @else
                                     <a href="{{ route('articles.chapters.show', [$article->id, $newestChapter->number]) }}"
                                        title="{{ $newestChapter->title }}">{{ $newestChapter->number_text }}</a>
+                                    <br>
+                                    <time class="time"
+                                          title="{{ $newestChapter->updated_at }}">
+                                        {{ $newestChapter->updated_at_text }}
+                                    </time>
                                 @endif
-                                <br>
-                                <time class="time"
-                                      title="{{ $newestChapter->updated_at }}">
-                                    {{ $newestChapter->updated_at_text }}
-                                </time>
                             </td>
                             <td class="nowrap chapter">
                                 <a class="comic-name">{{ $bookmark->name }}</a>
@@ -85,10 +96,12 @@
                                 <a class="comic-name">{{ $bookmark->description }}</a>
                             </td>
                             <td class="nowrap chapter">
-                                <a class="comic-name" title="{{ $bookmark->created_at }}">{{ $bookmark->created_at_text }}</a>
+                                <a class="comic-name"
+                                   title="{{ $bookmark->created_at }}">{{ $bookmark->created_at_text }}</a>
                             </td>
                             <td class="nowrap chapter">
-                                <a class="comic-name" title="{{ $bookmark->updated_at }}">{{ $bookmark->updated_at_text }}</a>
+                                <a class="comic-name"
+                                   title="{{ $bookmark->updated_at }}">{{ $bookmark->updated_at_text }}</a>
                             </td>
                         </tr>
                     @endforeach

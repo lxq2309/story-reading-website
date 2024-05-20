@@ -59,5 +59,6 @@
     });
 </script>
 @yield('comment-article-scripts')
+@yield('article-scripts')
 </body>
 </html>

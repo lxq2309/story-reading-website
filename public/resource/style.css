@@ -10671,3 +10671,8 @@ h4,
 #list-page, #chapter-big-container, #truyen, #account-information {
     min-height: calc(100vh - 200px);
 }
+
+.form-group.required label:after {
+    content:"*";
+    color:red;
+}

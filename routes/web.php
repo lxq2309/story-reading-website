@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Client\BookmarkController;
 use App\Http\Controllers\Client\CommentController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\UserController as UserAuthController;
@@ -41,12 +42,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         [UserAuthController::class, 'show'])
         ->name('users.show');
     // articles
+    //      articles - comments
     Route::post('/articles/{article}/comments',
         [CommentController::class, 'store'])
         ->name('articles.comments.store');
     Route::delete('/articles/{article}/comments/{comment}',
         [CommentController::class, 'destroy'])
         ->name('articles.comments.destroy');
+    //      articles - bookmarks
+    Route::post('/articles/{article}/bookmarks',
+        [BookmarkController::class, 'store'])
+        ->name('articles.bookmarks.store');
+    Route::delete('/articles/{article}/bookmarks/{bookmark}',
+        [BookmarkController::class, 'destroy'])
+        ->name('articles.bookmarks.destroy');
     // Route admin, authorize: poster, admin
     Route::prefix('admin')
         ->name('admin.')

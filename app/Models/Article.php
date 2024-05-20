@@ -7,15 +7,19 @@ use App\Enums\ArticleStatus;
 use App\Scopes\ApprovedArticleScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 class Article extends Model
 {
     use HasFactory;
+
     protected static function boot()
     {
         parent::boot();
-        if (!is_route('admin.*'))
-        {
+        if (!is_route('admin.*')) {
             static::addGlobalScope(new ApprovedArticleScope());
         }
     }
@@ -46,20 +50,30 @@ class Article extends Model
         return $value.' chương';
     }
 
-    protected function getNewestChapterAttribute(): Chapter
+    protected function getNewestChapterAttribute(): ?Chapter
     {
         $newestChapterNumber = $this->chapters->max('number');
-        return $this->chapters
+        $newestChapter = $this->chapters
             ->where('number', $newestChapterNumber)
             ->first();
+        if (!empty($newestChapter)) {
+            return $newestChapter;
+        } else {
+            return null;
+        }
     }
 
-    protected function getFirstChapterAttribute(): Chapter
+    protected function getFirstChapterAttribute(): ?Chapter
     {
         $firstChapterNumber = $this->chapters()->min('number');
-        return $this->chapters
+        $firstChapter = $this->chapters
             ->where('number', $firstChapterNumber)
             ->first();
+        if (!empty($firstChapter)) {
+            return $firstChapter;
+        } else {
+            return null;
+        }
     }
 
     protected function getCreatedAtTextAttribute()
@@ -99,6 +113,19 @@ class Article extends Model
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class, 'article_id', 'id');
+    }
+
+    public function bookmarks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Bookmark::class, 'article_id', 'id');
+    }
+
+    public function getBookmarkForCurrentUser() : ?Bookmark
+    {
+        // Lấy bookmark của bài viết hiện tại cho người dùng đang đăng nhập
+        $bookmark = Auth::user()->bookmarks()->where('article_id', $this->id)->first();
+
+        return $bookmark; // Nếu không tìm thấy bookmark nó sẽ trả về null mặc định
     }
 
     public static function getHotArticles(

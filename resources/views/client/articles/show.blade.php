@@ -75,16 +75,41 @@
                                 <span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;ĐỌC TỪ ĐẦU
                             </a>
                         @endif
-                        <a id="add-bookmark-btn" class="btn btn-info btn-border">
-                            <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;BOOKMARK
-                        </a>
+                        @if($isUserLoggedIn)
+                            @php
+                                $bookmarkForCurrentUser = $article->getBookmarkForCurrentUser();
+                            @endphp
+                            @if(empty($bookmarkForCurrentUser))
+                                <a id="add-bookmark-btn" class="btn btn-info btn-border">
+                                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;THÊM DẤU TRANG
+                                </a>
+                            @else
+                                <a id="delete-bookmark-btn" class="btn btn-success btn-border">
+                                    <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;ĐÃ THÊM DẤU TRANG
+                                </a>
+                                <form
+                                        id="delete-bookmark-form"
+                                        style="display: none"
+                                        method="POST"
+                                        action="{{ route('articles.bookmarks.destroy', [$article->id, $bookmarkForCurrentUser->id]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+
+                            @endif
+                        @endif
                         @if($isUserLoggedIn && ($currentUser->is_admin || $currentUser->id === $user->id))
                             <a href="{{ route('admin.articles.edit', $article->id) }}"
-                               class="btn btn-success btn-border">
+                               class="btn btn-primary btn-border">
                                 <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Sửa bài viết
                             </a>
                         @endif
                     </div>
+                    @if($message = session('bookmark_success'))
+                        <div class="alert alert-success" style="margin-top: 10px;" role="alert">
+                            {{ $message }}
+                        </div>
+                    @endif
 
                     @if(!$chapters->isEmpty())
                         <div class="l-chapter">
@@ -153,29 +178,62 @@
         </div>
     </div>
 
-    <!-- HTML code for the modal -->
+    <!-- Modal thêm bookmark -->
     <div id="bookmark-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form id="bookmark-form">
-                <input type="hidden" id="bookmarkId" name="bookmarkId" value="">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="bookmark-name" name="name" class="form-control" value="@article.Title"
+            <form action="{{ route('articles.bookmarks.store', $article->id) }}" method="post" id="bookmark-form">
+                @csrf
+                <div class="form-group required">
+                    <label for="name">Tên dấu trang</label>
+                    <input type="text" id="name" name="name" class="form-control" value="{{ $article->title }}"
                            required>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description:</label>
-                    <textarea id="bookmark-description" name="description" class="form-control"></textarea>
+                    <label for="description">Mô tả</label>
+                    <textarea id="description" name="description"
+                              class="form-control">Dấu trang từ truyện {{ $article->title }}</textarea>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="isPublic" name="isPublic">
-                    <label for="isPublic">Public</label>
+                    <input value="1" type="checkbox" id="is_public" name="is_public" checked>
+                    <label for="is_public">Công khai</label>
                 </div>
 
-                <input type="hidden" id="bookmark-articleId" name="articleId" value="@article.ArticleId" required>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Thêm</button>
             </form>
         </div>
     </div>
+@endsection
+
+@section('article-scripts')
+    <script !src="">
+        $(document).ready(function () {
+            var modal = $("#bookmark-modal");
+            var closeBtn = $(".close");
+
+            // When the user clicks the button, open the modal
+            $("#add-bookmark-btn").click(function () {
+                modal.css("display", "block");
+            });
+
+            // When the user click the delete button, show confirmation
+            $('#delete-bookmark-btn').click(function () {
+                if (confirm('Bạn có muốn xoá dấu trang cho truyện này không?')) {
+                    $('#delete-bookmark-form').submit();
+                }
+            });
+
+            // When the user clicks on <span> (x), close the modal
+            closeBtn.click(function () {
+                modal.css("display", "none");
+            });
+
+            // When the user clicks anywhere outside of the modal, close it
+            $(window).click(function (event) {
+                if (event.target == modal[0]) {
+                    modal.css("display", "none");
+                }
+            });
+        });
+    </script>
 @endsection
