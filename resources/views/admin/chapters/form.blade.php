@@ -19,7 +19,7 @@
         <div class="form-group required">
             <label for="content">Nội dung</label>
             <textarea name="content" id="content"
-                   class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content', $chapter->content) }}</textarea>
+                      class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content', $chapter->content) }}</textarea>
             @if ($errors->has('content'))
                 <div class="invalid-feedback">{{ $errors->first('content') }}</div>
             @endif
@@ -35,8 +35,43 @@
         $('#content').summernote({
             placeholder: 'Nhập nội dung của chương',
             height: 500,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+            ],
+            popover: {
+                image: [
+                    ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                    ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                    ['remove', ['removeMedia']]
+                ],
+                link: [
+                    ['link', ['linkDialogShow', 'unlink']]
+                ],
+                table: [
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                ],
+                air: [
+                    ['color', ['color']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['para', ['ul', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']]
+                ]
+            },
+            codemirror: {
+                theme: 'monokai'
+            },
             callbacks: {
-                onImageUpload: function(files) {
+                onImageUpload: function (files) {
                     // Get the first file (assuming you don't allow multiple file uploads)
                     var file = files[0];
 
@@ -56,13 +91,13 @@
                         cache: false,
                         contentType: false,
                         processData: false,
-                        success: function(response) {
+                        success: function (response) {
                             // On success, insert the image URL into the summernote editor
                             if (response.data && response.data.link) {
                                 $('#content').summernote('insertImage', response.data.link);
                             }
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             // Handle any errors here
                             console.error('Error uploading image: ' + textStatus, errorThrown);
                         }
