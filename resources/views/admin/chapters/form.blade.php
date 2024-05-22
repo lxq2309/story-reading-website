@@ -30,3 +30,45 @@
         <button type="submit" class="btn btn-primary">{{ __('Xác nhận') }}</button>
     </div>
 </div>
+@section('ArticleScripts')
+    <script !src="">
+        $('#content').summernote({
+            placeholder: 'Nhập nội dung của chương',
+            height: 500,
+            callbacks: {
+                onImageUpload: function(files) {
+                    // Get the first file (assuming you don't allow multiple file uploads)
+                    var file = files[0];
+
+                    // Create FormData object and append the file
+                    var formData = new FormData();
+                    formData.append('image', file);
+
+                    // Make an AJAX request to the Imgur API
+                    $.ajax({
+                        url: 'https://api.imgur.com/3/image',
+                        type: 'POST',
+                        headers: {
+                            Authorization: 'Client-ID ' + '23d58aa188f6abe',
+                            Accept: 'application/json'
+                        },
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            // On success, insert the image URL into the summernote editor
+                            if (response.data && response.data.link) {
+                                $('#content').summernote('insertImage', response.data.link);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Handle any errors here
+                            console.error('Error uploading image: ' + textStatus, errorThrown);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+@endsection
