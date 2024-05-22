@@ -28,7 +28,7 @@ class Chapter extends Model
     {
         $value = $this->number;
         $previousNumber = $value - 1;
-        $previousChapter = Chapter::query()->where('number', $previousNumber)->first();
+        $previousChapter = Chapter::query()->where('article_id', $this->article_id)->where('number', $previousNumber)->first();
         return $previousChapter;
     }
 
@@ -36,7 +36,7 @@ class Chapter extends Model
     {
         $value = $this->number;
         $nextNumber = $value + 1;
-        $nextChapter = Chapter::query()->where('number', $nextNumber)->first();
+        $nextChapter = Chapter::query()->where('article_id', $this->article_id)->where('number', $nextNumber)->first();
         return $nextChapter;
     }
     protected function getCreatedAtTextAttribute()
