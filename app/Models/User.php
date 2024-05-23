@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+use Illuminate\Support\Facades\Session;
 
 class User extends Model implements AuthenticatableContract,
     CanResetPasswordContract, MustVerifyEmailContract
@@ -23,7 +24,8 @@ class User extends Model implements AuthenticatableContract,
 
     protected $fillable
         = [
-            'username', 'name', 'email', 'password', 'avatar', 'description', 'address',
+            'username', 'name', 'email', 'password', 'avatar', 'description',
+            'address',
             'role', 'date_of_birth', 'gender', 'remember_token'
         ];
 
@@ -42,16 +44,23 @@ class User extends Model implements AuthenticatableContract,
         return $this->role === UserRole::USER->value;
     }
 
-    public function renderHtmlTextColor($text, $color): string
-    {
-        return '<span style="color: '.$color.'; text-shadow: 0 1px 1px whitesmoke;">'
+    public function renderHtmlTextColor(
+        $text,
+        $color,
+        $isBanned = false
+    ): string {
+        return '<span style="color: '.$color.';'
+            .'text-shadow: 0 1px 1px whitesmoke;'
+            .($isBanned ? 'text-decoration: line-through' : '')
+            .'">'
             .$text.'</span>';
     }
 
     public function renderUserName()
     {
         $color = UserRole::from($this->role)->color();
-        return $this->renderHtmlTextColor($this->username, $color);
+        $isBanned = !empty($this->banned);
+        return $this->renderHtmlTextColor($this->username, $color, $isBanned);
     }
 
     public function renderRoleText()
@@ -128,13 +137,35 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasVerifiedEmail() ? 'Đã xác thực' : 'Chưa xác thực';
     }
+
     protected function getCreatedAtTextAttribute()
     {
         return $this->created_at->diffForHumans();
     }
+
     protected function getUpdatedAtTextAttribute()
     {
         return $this->updated_at->diffForHumans();
+    }
+
+    protected function getBannedAttribute()
+    {
+        if (is_route('admin.*')) {
+            return $this->banned()->first();
+        } else {
+            // Khóa session cho người dùng cụ thể này
+            $sessionKey = 'banned_user_'.$this->id;
+
+            // Kiểm tra xem đã có thông tin trong session chưa và lấy ra nếu có
+            if (!session()->exists($sessionKey)) {
+                // Lưu trữ vào session nếu chưa có
+                $bannedUser = $this->banned()->first();
+                session()->put($sessionKey, $bannedUser);
+            }
+
+            // Lấy thông tin từ session
+            return session($sessionKey);
+        }
     }
 
     public function hasAnyRole(array $roles)
@@ -148,11 +179,10 @@ class User extends Model implements AuthenticatableContract,
         return false;
     }
 
-    public function hasRole($role) : bool
+    public function hasRole($role): bool
     {
         return $this->role === $role;
     }
-
 
 
     public function banned(): \Illuminate\Database\Eloquent\Relations\HasOne
@@ -174,4 +204,12 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany(Comment::class, 'user_id', 'id');
     }
+
+    public function setShouldReLogin($value)
+    {
+        $this->should_re_login = $value;
+        $this->setRememberToken(null);
+        $this->save();
+    }
+
 }

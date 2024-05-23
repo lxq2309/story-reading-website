@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Route auth
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'check_banned'])->group(function () {
     // users
     Route::get('/users/change-password',
         [UserAuthController::class, 'changePassword'])
@@ -41,6 +41,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/users',
         [UserAuthController::class, 'show'])
         ->name('users.show');
+    Route::get('/banned',
+        [UserAuthController::class, 'handleBanned'])
+        ->name('users.handle_banned');
     // articles
     //      articles - comments
     Route::post('/articles/{article}/comments',

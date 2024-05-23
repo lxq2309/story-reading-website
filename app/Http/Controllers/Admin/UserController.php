@@ -141,6 +141,8 @@ class UserController extends Controller
         $bannedUser->reason = $request->reason;
         $bannedUser->expired_at = now()->addDays($request->ban_days);
         $bannedUser->save();
+        // Bắt buộc người dùng phải đăng nhập lại
+        $user->setShouldReLogin(true);
         return redirect()->route('admin.users.index')
             ->with('success', 'Cấm tài khoảnt thành công!');
     }
@@ -156,6 +158,8 @@ class UserController extends Controller
         $bannedUser = $user->banned;
         $bannedUser->reason = $request->reason;
         $bannedUser->save();
+        // Bắt buộc người dùng phải đăng nhập lại
+        $user->setShouldReLogin(true);
         return redirect()->route('admin.users.banned')
             ->with('success', 'Sửa lý do cấm thành công!');
     }
@@ -164,6 +168,8 @@ class UserController extends Controller
     {
         $bannedUser = $user->banned;
         $bannedUser->delete();
+        // Bắt buộc người dùng phải đăng nhập lại
+        $user->setShouldReLogin(true);
         return redirect()->route('admin.users.banned')
             ->with('success', 'Bỏ cấm thành công!');
     }

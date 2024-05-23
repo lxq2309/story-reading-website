@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Article;
+use App\Models\BannedUser;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -85,7 +86,10 @@ class UserController extends Controller
 
     public function showBookmarks(User $user): View
     {
-        $bookmarks = $user->bookmarks()->orderByDesc('updated_at')->paginate();
+        $bookmarks = $user->bookmarks()
+            ->whereHas(lcfirst(class_basename(Article::class)))
+            ->orderByDesc('updated_at')
+            ->paginate();
         return view('client.users.bookmarks', [
             'bookmarks' => $bookmarks,
             'user' => $user,
@@ -107,6 +111,17 @@ class UserController extends Controller
     {
         return view('client.users.change-password', [
             'user' => $request->user(),
+        ]);
+    }
+
+    public function handleBanned(Request $request)
+    {
+        $bannedUser = $request->user()->banned;
+        if (!$bannedUser) {
+            return redirect()->route('home.index');
+        }
+        return view('client.users.banned', [
+            'bannedUser' => $bannedUser,
         ]);
     }
 }
